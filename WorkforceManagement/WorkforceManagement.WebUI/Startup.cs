@@ -14,6 +14,8 @@ using WorkforceManagement.WebUI.Authorization;
 using WorkforceManagement.Domain.Concrete;
 using Microsoft.EntityFrameworkCore;
 using WorkforceManagement.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WorkforceManagement.WebUI
 {
@@ -34,11 +36,19 @@ namespace WorkforceManagement.WebUI
         string _testSecret = null;
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EFDbContext>(options => {
+
+            services.AddDbContext<EFDbContext>(options =>
+            {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            
-            services.AddMvc(config=> {
+
+            //    services.AddIdentity<ApplicationUser, IdentityRole>()
+            //.AddEntityFrameworkStores<ApplicationDbContext>()
+            //.AddDefaultTokenProviders();
+
+
+            services.AddMvc(config =>
+            {
                 var policy = new AuthorizationPolicyBuilder()
                                     .RequireAuthenticatedUser()
                                     .Build();
@@ -46,16 +56,21 @@ namespace WorkforceManagement.WebUI
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
-            services.AddSingleton<IAuthorizationHandler, AdministratorsAuthorizationHandler>();
+            //await CreateRoles(serviceProvider);
+
+
+            //services.AddSingleton<IAuthorizationHandler, AdministratorsAuthorizationHandler>();
         }
 
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,EFDbContext context)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, EFDbContext context, IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
+
+           
 
             if (env.IsDevelopment())
             {
@@ -65,6 +80,15 @@ namespace WorkforceManagement.WebUI
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookie",
+                LoginPath = new PathString("/Account/Login"),
+                AccessDeniedPath = new PathString("/Account/Forbidden"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseStaticFiles();
 
@@ -80,5 +104,49 @@ namespace WorkforceManagement.WebUI
 
             DbInitalizer.Initalize(context);
         }
+
+
+        //private async Task CreateRoles(IServiceProvider serviceProvider)
+        //{
+        //    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //    var userManager = serviceProvider.GetRequiredService<UserManager<IdentityRole>>();
+        //    string[] roleNames = { "Admin", "Member" };
+        //    IdentityResult roleResult;
+
+        //    foreach (var roleName in roleNames)
+        //    {
+        //        var roleExist = await roleManager.RoleExistsAsync(roleName);
+        //        if (!roleExist)
+        //        {
+        //            roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+        //        }
+        //    }
+
+        //    //creating a super user who could maintain the web app
+        //    var powerUser = new ApplicationUser
+        //    {
+        //        UserName = Configuration.GetSection("UserSettings")["UserEmail"],
+        //        Email = Configuration.GetSection("UserSettings")["UserEmail"]
+        //    };
+
+        //    string userPassword = Configuration.GetSection("UserSettings")["UserPassword"];
+
+
+
+        //    var _user = await userManager.FindByEmailAsync(Configuration.GetSection("UserSettings")["UserEmail"]);
+
+        //    if (_user == null)
+        //    {
+        //        var createPowerUser = await userManager.CreateAsync(powerUser, userPassword);
+        //        if (createPowerUser.Succeeded)
+        //        {
+        //            // here we tie the new user to the "Admin" role
+
+        //            await userManager.AddToRoleAsync(powerUser, "Admin");
+        //        }
+        //    }
+        //}
     }
+
+    public class App : IdentityUser { }
 }

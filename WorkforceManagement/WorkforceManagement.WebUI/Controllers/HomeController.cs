@@ -22,12 +22,18 @@ namespace WorkforceManagement.WebUI.Controllers
             _rep = new EFModelContext<Employee>(_context);
         }
 
-       
-        
-
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(_rep.Model.ToList());
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult AuthPage()
+        {
+            return View();
         }
     }
 }
