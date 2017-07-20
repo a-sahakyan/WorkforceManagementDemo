@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using WorkforceManagement.Domain.Entities;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
 
@@ -18,6 +20,8 @@ namespace WorkforceManagement.WebUI.Controllers
             return View();
         }
 
+        [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(Employee userFromFore)
         {
             var userFromStorage = TestUserStorage.UserList

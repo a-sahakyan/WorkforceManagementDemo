@@ -1,15 +1,15 @@
 @*@using WorkforceManagement.Domain.Entities;
-@model IEnumerable<Employee>
-@{
-    ViewData["Title"] = "Index";
-}
+    @model IEnumerable<Employee>
+    @{
+        ViewData["Title"] = "Index";
+    }
 
-@foreach(var item in Model)
-{
-    <p>@item.Email</p>
-    <p>@item.Name</p>
+    @foreach(var item in Model)
+    {
+        <p>@item.Email</p>
+        <p>@item.Name</p>
 
-}*@
+    }*@
 @using System.Security.Claims;
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,8 +21,14 @@
     @if (!User.Identity.IsAuthenticated)
     {
         <p>
-            you are not login, please @Html.ActionLink("Login now", "Login", "Account")
+            
+            {
+            <button type="submit" value="shh">fff</button>
+            }
+
+
         </p>
+
     }
     else
     {
@@ -34,9 +40,14 @@
 
         <p>
             you can visit the authorize page, @Html.ActionLink("Login now", "Login", "Account")
- AuthPage
+            AuthPage
         </p>
     }
-    }
+    kkkkkkkkkkkkkkkkkkkkkkkkkk
+    <form action="/Account/Login" method="post">
+        you are not login, please @Html.ActionLink("Login now", FormMethod.Post)
+    </form>
+
+
 </body>
 </html>
