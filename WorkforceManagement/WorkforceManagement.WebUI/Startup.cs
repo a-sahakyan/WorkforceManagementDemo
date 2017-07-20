@@ -10,6 +10,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
+using WorkforceManagement.WebUI.Authorization;
+using WorkforceManagement.Domain.Concrete;
+using Microsoft.EntityFrameworkCore;
+using WorkforceManagement.Domain.Entities;
 
 namespace WorkforceManagement.WebUI
 {
@@ -19,16 +23,21 @@ namespace WorkforceManagement.WebUI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder();
-
-            if (env.IsDevelopment())
-            {
-            }
+            var builder = new ConfigurationBuilder()
+                   .SetBasePath(env.ContentRootPath)
+                   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                   .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         string _testSecret = null;
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<EFDbContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            
             services.AddMvc(config=> {
                 var policy = new AuthorizationPolicyBuilder()
                                     .RequireAuthenticatedUser()
@@ -36,12 +45,14 @@ namespace WorkforceManagement.WebUI
 
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            services.AddSingleton<IAuthorizationHandler, AdministratorsAuthorizationHandler>();
         }
 
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,EFDbContext context)
         {
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
@@ -66,6 +77,8 @@ namespace WorkforceManagement.WebUI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DbInitalizer<Employee>.Initalize(context);
         }
     }
 }
