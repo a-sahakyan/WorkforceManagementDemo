@@ -1,7 +1,12 @@
-
+@using WorkforceManagement.Domain.Entities;
+@model IEnumerable<Employee>
 @{
     ViewData["Title"] = "Index";
 }
 
-Testing..
+@foreach(var item in Model)
+{
+    <p>@item.Email</p>
+    <p>@item.Name</p>
 
+}

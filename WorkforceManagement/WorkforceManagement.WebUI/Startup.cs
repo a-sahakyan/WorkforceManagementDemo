@@ -78,7 +78,7 @@ namespace WorkforceManagement.WebUI
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DbInitalizer<Employee>.Initalize(context);
+            DbInitalizer.Initalize(context);
         }
     }
 }
