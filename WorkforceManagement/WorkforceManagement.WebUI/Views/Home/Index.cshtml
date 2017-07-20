@@ -20,15 +20,10 @@
     <h1>Index Page</h1>
     @if (!User.Identity.IsAuthenticated)
     {
-        <p>
-            
+            @Html.BeginForm("Login", "Account", FormMethod.Post)
             {
-            <button type="submit" value="shh">fff</button>
+            <button type="submit" value="shh" class="btn btn-primary">Login Now</button>
             }
-
-
-        </p>
-
     }
     else
     {
@@ -43,11 +38,5 @@
             AuthPage
         </p>
     }
-    kkkkkkkkkkkkkkkkkkkkkkkkkk
-    <form action="/Account/Login" method="post">
-        you are not login, please @Html.ActionLink("Login now", "Login", "Account", FormMethod.Post)
-    </form>
-
-
 </body>
 </html>
