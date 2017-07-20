@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace WorkforceManagement.WebUI
 {
@@ -16,6 +17,16 @@ namespace WorkforceManagement.WebUI
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder();
+
+            if (env.IsDevelopment())
+            {
+            }
+        }
+
+        string _testSecret = null;
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(config=> {
@@ -26,6 +37,8 @@ namespace WorkforceManagement.WebUI
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
         }
+
+        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -43,6 +56,9 @@ namespace WorkforceManagement.WebUI
             }
 
             app.UseStaticFiles();
+
+            //var _testUserPw = Configuration["SeedUserPW"];
+
 
             app.UseMvc(routes =>
             {
