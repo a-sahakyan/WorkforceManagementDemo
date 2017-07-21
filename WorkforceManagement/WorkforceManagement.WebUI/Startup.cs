@@ -25,6 +25,8 @@ namespace WorkforceManagement.WebUI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public Startup(IHostingEnvironment env)
         {
+            _contentRootPath = env.ContentRootPath;
+
             var builder = new ConfigurationBuilder()
                    .SetBasePath(env.ContentRootPath)
                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -32,14 +34,19 @@ namespace WorkforceManagement.WebUI
                    .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
+        private string _contentRootPath = "";     //field
 
         string _testSecret = null;
         public void ConfigureServices(IServiceCollection services)
         {
-
+            string conn = Configuration.GetConnectionString("DefaultConnection");
+            if (conn.Contains("%CONTENTROOTPATH%"))
+            {
+                conn = conn.Replace("%CONTENTROOTPATH%", _contentRootPath);
+            }
             services.AddDbContext<EFDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(conn);
             });
 
             //    services.AddIdentity<ApplicationUser, IdentityRole>()
