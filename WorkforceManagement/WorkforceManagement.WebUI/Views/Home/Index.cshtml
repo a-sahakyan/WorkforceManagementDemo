@@ -1,42 +1,27 @@
-@*@using WorkforceManagement.Domain.Entities;
-    @model IEnumerable<Employee>
-    @{
-        ViewData["Title"] = "Index";
-    }
-
-    @foreach(var item in Model)
-    {
-        <p>@item.Email</p>
-        <p>@item.Name</p>
-
-    }*@
+@using WorkforceManagement.Domain.Entities;
 @using System.Security.Claims;
+@model  IEnumerable<Employee>
+@{
+    ViewData["Title"] = "Index";
+}
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <h1>Index Page</h1>
-    @if (!User.Identity.IsAuthenticated)
+@if (!User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("Login", "Account", FormMethod.Post))
     {
-            @Html.BeginForm("Login", "Account", FormMethod.Post)
-            {
-            <button type="submit" value="shh" class="btn btn-primary">Login Now</button>
-            }
+        <button type="submit" class="btn btn-primary">Login Now</button>
     }
-    else
+    @using (Html.BeginForm("Registration", "Account"))
     {
-        var user = User.Identity as ClaimsIdentity;
-
-        <p>
-            welcome @user.Name, <a href="/Account/Logout">Logout</a>
-        </p>
-
-        <p>
-            you can visit the authorize page, @Html.ActionLink("Login now", "Login", "Account")
-            AuthPage
-        </p>
+        <button type="submit" class="btn btn-primary">Registration</button>
     }
-</body>
-</html>
+}
+else
+{
+    var user = User.Identity as ClaimsIdentity;
+
+    <p>welcome @user.Name, <a href="/Account/Logout">Logout</a></p>
+    <p>
+       you can visit the authorize page, @Html.ActionLink("Login now", "Login", "Account") AuthPage
+    </p>
+}

@@ -13,20 +13,32 @@ namespace WorkforceManagement.WebUI.Controllers
    [AllowAnonymous]
     public class HomeController : Controller
     {
-        IRepository<Employee> _rep;
+        IRepository<Employee> _employee;
+        IRepository<global::WorkforceManagement.Domain.Entities.AuthData> _authorization;
         private readonly EFDbContext _context;
 
         public HomeController(EFDbContext context)
         {
             _context = context;
-            _rep = new EFModelContext<Employee>(_context);
+            _employee = new EFModelContext<Employee>(_context);
+            _authorization = new EFModelContext<global::WorkforceManagement.Domain.Entities.AuthData>(_context);
         }
 
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return View(_rep.Model.ToList());
+            object o = _employee.Model;
+            foreach (var item in _authorization.Model)
+            {
+  
+            }
+            return View(o);
+        }
+
+        public void SetRole()
+        {
+            AuthorizeAttribute role = new AuthorizeAttribute();
         }
 
         [Authorize]
