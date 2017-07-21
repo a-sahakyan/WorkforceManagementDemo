@@ -5,51 +5,36 @@
     ViewData["Title"] = "Registration";
 }
 
-rrrrrrrrrrrrrrrrrrrrrrrrrrrr
-
-@*<h2>Registration</h2>
-
-<form asp-action="Registration">
-    <div class="form-horizontal">
-        <h4>AuthData</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="EmployeeId" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Roles" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Roles" class="form-control" />
-                <span asp-validation-for="Roles" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Email" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Password" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-</form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>*@
+@using (Html.BeginForm("CheckAction", "SomeController", FormMethod.Post))
+{
+    <label title="Email">Email:</label>
+    <br />
+    <input type="email" name="email" required="required" size="30" />
+    <br />
+    <label title="password">Password:</label>
+    <br />
+    <input  type="password" name="password" required="required" size="30" />
+    <br />
+    <label title="Name">Name:</label>
+    <br />
+    <input type="text" name="name" required="required" size="30" />
+    <br />
+    <label title="Lastname">LastName:</label>
+    <br />
+    <input type="text" name="lastname" required="required" size="30" />
+    <br />
+    <label title="Birth">Birth:</label>
+    <br />
+    <input type="date" name="Birth" required="required" size="30" />
+    <br />
+    <label title="Profession">Profession:</label>
+    <br />
+    <select required="required">
+        <option>Programmer</option>
+        <option>HR manager</option>
+        <option>IT systems administrator</option>
+        <option>IT Support Manager</option>
+    </select>
+    <button type="submit" class="btn btn-success" value="submit">Create</button>
+}
 
