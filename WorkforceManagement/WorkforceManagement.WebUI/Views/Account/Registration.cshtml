@@ -1,11 +1,9 @@
-@using WorkforceManagement.Domain.Entities;
-@model IEnumerable<AuthData>
 
 @{
     ViewData["Title"] = "Registration";
 }
 
-@using (Html.BeginForm("CheckAction", "SomeController", FormMethod.Post))
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
 {
     <label title="Email">Email:</label>
     <br />

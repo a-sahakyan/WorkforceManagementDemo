@@ -90,9 +90,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
         public IActionResult Registration()
         {
-            int a = 5; 
-
-            return View(_rep.Model.ToList()); 
+            return View(); 
         }
     }
 }

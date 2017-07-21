@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-@if (!User.Identity.IsAuthenticated)
+@if (ViewBag.ll)
 {
     using (Html.BeginForm("Login", "Account", FormMethod.Post))
     {
