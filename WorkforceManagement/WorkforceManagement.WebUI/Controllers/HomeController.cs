@@ -9,6 +9,7 @@ using WorkforceManagement.Domain.Abstract;
 using WorkforceManagement.Domain.Entities;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Security.Claims;
+using System.Data.SqlClient;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
@@ -39,27 +40,33 @@ namespace WorkforceManagement.WebUI.Controllers
             return View(o);
         }
 
-        public async Task<IActionResult> Index(string email, string password, AuthData userFromFore)
+        public IActionResult Index(Employee employee, AuthData authData)
         {
-            //var userFromStorage = _authorization.Model.ToList()
-            //    .FirstOrDefault(m => m.Email == userFromFore.Email && m.Password == userFromFore.Password);
+            //SqlConnection con = new SqlConnection();
+            //SqlCommand cmd = new SqlCommand("SET IDENTITY_INSERT [dbo].[MyUser] ON", con);
+            //cmd.CommandText = "aaa";
 
-            //if (userFromStorage == null)
-            //{
-            //    //you can add all of ClaimTypes in this collection 
-            //    var claims = new List<Claim>()
-            //    {
-            //        new Claim(ClaimTypes.Name,userFromStorage.Email) 
-            //        //,new Claim(ClaimTypes.Email,"emailaccount@microsoft.com")  
-            //     };
-                var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
+            //int retVal = cmd.ExecuteNonQuery();
+            //_context.SaveChanges();
 
-                ViewBag.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
+            //_context.Database.BeginTransaction();
+            int id = _employee.Model.Select(x => x.EmployeeId).Last();
 
-                
-            //var userPrincipal = new ClaimsPrincipal("cookie");
-            //await HttpContext.Authentication.SignInAsync("cookie", userPrincipal);
-            //}
+            _employee.Model = new List<Employee>()
+            {
+                new Employee() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
+            };
+
+            _authorization.Model = new List<AuthData>()
+            {
+                new AuthData() { Email = authData.Email,Password=authData.Password,Roles="User"}
+            };
+
+
+            var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
+
+            ViewBag.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
+
             return View();
         }
 
