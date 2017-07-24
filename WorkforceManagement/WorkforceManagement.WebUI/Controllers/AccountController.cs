@@ -124,16 +124,48 @@ namespace WorkforceManagement.WebUI.Controllers
         [AllowAnonymous]
         public IActionResult Login(AuthData data)
         {
-            return View();
+            var adminEmail = _authorization.Model.Select(x => x.Email).First();
+            var adminPass = _authorization.Model.Select(x => x.Password).First();
+            AuthorizeAttribute auth = new AuthorizeAttribute();
+
+
+            if (data.Email == adminEmail && data.Password == adminPass)
+            {
+                auth.Roles = _authorization.Model.Select(x => x.Roles).First();
+                auth.Roles.Insert(0, "s");
+                auth.Roles.Insert(1, "ad");
+
+                foreach (var item in auth.Roles)
+                {
+
+                }
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                foreach (var item in _authorization.Model)
+                {
+                    if (item.Email == data.Email && item.Password == data.Password)
+                    {
+                        AuthorizationConfig.IsAuthenticated = true;
+                        ViewBag.Hello = _authorization.Model.Select(x => x.Employess.Name);
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                    ModelState.AddModelError(string.Empty, "invalid email or password");
+                    return View("Login");
+            }
         }
 
-        //[Authorize(Roles = "admin")]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await HttpContext.Authentication.SignOutAsync("Cookie");
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.Authentication.SignOutAsync("Cookie");
+            
 
-        //    return RedirectToAction("Index", "Home");
-        //}
+            return RedirectToAction("Index", "Home");
+        }
 
         //public static class TestUserStorage
         //{
@@ -143,6 +175,6 @@ namespace WorkforceManagement.WebUI.Controllers
         //    };
         //}
 
-        
+
     }
 }

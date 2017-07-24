@@ -22,7 +22,5 @@ namespace WorkforceManagement.Domain.Entities
 
         [Required(ErrorMessage = "Please enter your Profession")]
         public string Profession { get; set; }
-        //public string Email { get; set; }
-        //public string Password { get; set; }
     }
 }
