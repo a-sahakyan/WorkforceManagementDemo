@@ -1,33 +1,33 @@
-
+@model WorkforceManagement.Domain.Entities.AuthData
 @{
     ViewData["Title"] = "Registration";
 }
-
-@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+@using (Html.BeginForm("Index", "Account",FormMethod.Post))
 {
+    @Html.ValidationSummary();
     <label title="Email">Email:</label>
     <br />
-    <input type="email" name="email" required="required" size="30" />
+    <input type="text" name="email" size="30" />
     <br />
     <label title="password">Password:</label>
     <br />
-    <input  type="password" name="password" required="required" size="30" />
+    <input  type="password" name="password"  size="30" />
     <br />
     <label title="Name">Name:</label>
     <br />
-    <input type="text" name="name" required="required" size="30" />
+    <input type="text" name="name"  size="30" />
     <br />
     <label title="Lastname">LastName:</label>
     <br />
-    <input type="text" name="lastname" required="required" size="30" />
+    <input type="text" name="lastname"  size="30" />
     <br />
     <label title="Birth">Birth:</label>
     <br />
-    <input type="date" name="Birth" required="required" size="30" />
+    <input type="date" name="Birth"  size="30" />
     <br />
     <label title="Profession">Profession:</label>
     <br />
-    <select required="required" name="Profession" >
+    <select name="Profession" >
         <option selected="selected">Programmer</option>
         <option>HR manager</option>
         <option>IT systems administrator</option>

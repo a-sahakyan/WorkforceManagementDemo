@@ -10,6 +10,7 @@ using WorkforceManagement.Domain.Entities;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Security.Claims;
 using System.Data.SqlClient;
+using WorkforceManagement.WebUI.Authorization;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
@@ -19,6 +20,8 @@ namespace WorkforceManagement.WebUI.Controllers
         IRepository<Employee> _employee;
         IRepository<global::WorkforceManagement.Domain.Entities.AuthData> _authorization;
         private readonly EFDbContext _context;
+        public bool IsAuthenticated { get; set; }
+
 
         public HomeController(EFDbContext context)
         {
@@ -37,38 +40,12 @@ namespace WorkforceManagement.WebUI.Controllers
             {
 
             }
+            ViewBag.IsAuthenticated = AuthorizationConfig.IsAuthenticated;
+
             return View(o);
         }
 
-        public IActionResult Index(Employee employee, AuthData authData)
-        {
-            //SqlConnection con = new SqlConnection();
-            //SqlCommand cmd = new SqlCommand("SET IDENTITY_INSERT [dbo].[MyUser] ON", con);
-            //cmd.CommandText = "aaa";
-
-            //int retVal = cmd.ExecuteNonQuery();
-            //_context.SaveChanges();
-
-            //_context.Database.BeginTransaction();
-            int id = _employee.Model.Select(x => x.EmployeeId).Last();
-
-            _employee.Model = new List<Employee>()
-            {
-                new Employee() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
-            };
-
-            _authorization.Model = new List<AuthData>()
-            {
-                new AuthData() { Email = authData.Email,Password=authData.Password,Roles="User"}
-            };
-
-
-            var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
-
-            ViewBag.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
-
-            return View();
-        }
+       
 
         public void Check()
         {

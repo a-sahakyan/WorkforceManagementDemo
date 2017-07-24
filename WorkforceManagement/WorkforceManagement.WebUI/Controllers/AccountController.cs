@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WorkforceManagement.Domain.Abstract;
 using WorkforceManagement.Domain.Concrete;
+using WorkforceManagement.WebUI.Authorization;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
@@ -18,11 +19,15 @@ namespace WorkforceManagement.WebUI.Controllers
     {
         private readonly EFDbContext _context;
         IRepository<AuthData> _rep;
+        IRepository<Employee> _employee;
+        IRepository<global::WorkforceManagement.Domain.Entities.AuthData> _authorization;
 
         public AccountController(EFDbContext context)
         {
             _context = context;
-            _rep = new EFModelContext<AuthData>(_context);
+            _employee = new EFModelContext<Employee>(_context);
+            _authorization = new EFModelContext<AuthData>(_context);
+
         }
 
         public IActionResult Forbidden()
@@ -30,8 +35,37 @@ namespace WorkforceManagement.WebUI.Controllers
             return View();
         }
 
-        [HttpPost]
         [AllowAnonymous]
+        public IActionResult Index(Employee employee, AuthData authData)
+        {
+            if (ModelState.IsValid)
+            {
+                _employee.Model = new List<Employee>()
+                {
+                    new Employee() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
+                };
+
+                int id = _employee.Model.Select(x => x.EmployeeId).Last();
+
+                _authorization.Model = new List<AuthData>()
+                {
+                    new AuthData() {EmployeeId=id, Email = authData.Email,Password=authData.Password,Roles="User"}
+                };
+
+                var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
+
+                AuthorizationConfig.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View("Registration");
+            }
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
         //public async Task<IActionResult> Login(Employee userFromFore)
         //{
         //    var role = new IdentityRole();
@@ -88,9 +122,11 @@ namespace WorkforceManagement.WebUI.Controllers
         //    };
         //}
 
+        [HttpPost]
+        [AllowAnonymous]
         public IActionResult Registration()
         {
-            return View(); 
+            return View();
         }
     }
 }
