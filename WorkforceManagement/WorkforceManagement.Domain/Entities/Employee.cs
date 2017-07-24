@@ -9,11 +9,11 @@ namespace WorkforceManagement.Domain.Entities
     {
         public int EmployeeId { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(50,ErrorMessage ="Your name is too long")]
         [Required(ErrorMessage ="Please enter your name")]
         public string Name { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(50,ErrorMessage ="Your last name is too long")]
         [Required(ErrorMessage ="Please enter your last name")]
         public string LastName { get; set; }
 

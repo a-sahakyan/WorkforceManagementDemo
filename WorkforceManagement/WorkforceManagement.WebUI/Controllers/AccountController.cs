@@ -27,7 +27,6 @@ namespace WorkforceManagement.WebUI.Controllers
             _context = context;
             _employee = new EFModelContext<Employee>(_context);
             _authorization = new EFModelContext<AuthData>(_context);
-
         }
 
         public IActionResult Forbidden()
@@ -36,7 +35,15 @@ namespace WorkforceManagement.WebUI.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index(Employee employee, AuthData authData)
+        [HttpGet]
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Registration(Employee employee, AuthData authData)
         {
             if (ModelState.IsValid)
             {
@@ -66,12 +73,12 @@ namespace WorkforceManagement.WebUI.Controllers
 
         //[HttpPost]
         //[AllowAnonymous]
-        //public async Task<IActionResult> Login(Employee userFromFore)
+        //public async Task<IActionResult> Login(AuthData data)
         //{
         //    var role = new IdentityRole();
         //    role.Name = "admin";
-        //    //var userFromStorage = TestUserStorage.UserList
-        //    //    .FirstOrDefault(m => m.Email == userFromFore.Email && m.Password == userFromFore.Password);
+        //    var userFromStorage = TestUserStorage.UserList
+        //        .FirstOrDefault(m => m. == userFromFore.Email && m.Password == userFromFore.Password);
 
         //    if (userFromStorage != null)
         //    {
@@ -106,7 +113,21 @@ namespace WorkforceManagement.WebUI.Controllers
         //    }
         //}
 
-        //[Authorize(Roles ="admin")]
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult Login(AuthData data)
+        {
+            return View();
+        }
+
+        //[Authorize(Roles = "admin")]
         //public async Task<IActionResult> Logout()
         //{
         //    await HttpContext.Authentication.SignOutAsync("Cookie");
@@ -116,17 +137,12 @@ namespace WorkforceManagement.WebUI.Controllers
 
         //public static class TestUserStorage
         //{
-        //    public static List<Employee> UserList { get; set; } = new List<Employee>()
+        //    public static List<AuthData> UserList { get; set; } = new List<AuthData>()
         //    {
         //       new Employee { Email = "User1",Password = "112233"}
         //    };
         //}
 
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult Registration()
-        {
-            return View();
-        }
+        
     }
 }

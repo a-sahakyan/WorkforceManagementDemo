@@ -20,8 +20,6 @@ namespace WorkforceManagement.WebUI.Controllers
         IRepository<Employee> _employee;
         IRepository<global::WorkforceManagement.Domain.Entities.AuthData> _authorization;
         private readonly EFDbContext _context;
-        public bool IsAuthenticated { get; set; }
-
 
         public HomeController(EFDbContext context)
         {

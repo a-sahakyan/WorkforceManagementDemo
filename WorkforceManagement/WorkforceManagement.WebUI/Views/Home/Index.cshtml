@@ -7,11 +7,11 @@
 
 @if (!ViewBag.IsAuthenticated)
 {
-    using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    using (Html.BeginForm("Login", "Account", FormMethod.Get))
     {
         <button type="submit" class="btn btn-primary">Login Now</button>
     }
-    @using (Html.BeginForm("Registration", "Account"))
+    @using (Html.BeginForm("Registration", "Account",FormMethod.Get))
     {
         <button type="submit" class="btn btn-primary">Registration</button>
     }
