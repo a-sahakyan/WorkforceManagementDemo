@@ -54,14 +54,15 @@ namespace WorkforceManagement.WebUI
             //.AddDefaultTokenProviders();
 
 
-            services.AddMvc(config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                                    .RequireAuthenticatedUser()
-                                    .Build();
+            //services.AddMvc(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //                        .RequireAuthenticatedUser()
+            //                        .Build();
 
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //});
+            services.AddMvc();
 
             //await CreateRoles(serviceProvider);
 
@@ -88,14 +89,14 @@ namespace WorkforceManagement.WebUI
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = "Cookie",
-                LoginPath = new PathString("/Account/Login"),
-                AccessDeniedPath = new PathString("/Account/Forbidden"),
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true
-            });
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions
+            //{
+            //    AuthenticationScheme = "Cookie",
+            //    LoginPath = new PathString("/Account/Login"),
+            //    AccessDeniedPath = new PathString("/Account/Forbidden"),
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true
+            //});
 
             app.UseStaticFiles();
 
@@ -155,5 +156,4 @@ namespace WorkforceManagement.WebUI
         //}
     }
 
-    public class App : IdentityUser { }
 }

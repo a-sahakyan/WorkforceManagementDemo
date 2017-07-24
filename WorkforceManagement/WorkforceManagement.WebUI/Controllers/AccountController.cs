@@ -18,8 +18,8 @@ namespace WorkforceManagement.WebUI.Controllers
     public class AccountController : Controller
     {
         private readonly EFDbContext _context;
-        IRepository<AuthData> _rep;
         IRepository<Employee> _employee;
+        IRepository<Roles> _roles;
         IRepository<global::WorkforceManagement.Domain.Entities.AuthData> _authorization;
 
         public AccountController(EFDbContext context)
@@ -27,6 +27,7 @@ namespace WorkforceManagement.WebUI.Controllers
             _context = context;
             _employee = new EFModelContext<Employee>(_context);
             _authorization = new EFModelContext<AuthData>(_context);
+            _roles = new EFModelContext<Roles>(_context);
         }
 
         public IActionResult Forbidden()
@@ -127,13 +128,14 @@ namespace WorkforceManagement.WebUI.Controllers
             var adminEmail = _authorization.Model.Select(x => x.Email).First();
             var adminPass = _authorization.Model.Select(x => x.Password).First();
             AuthorizeAttribute auth = new AuthorizeAttribute();
+            auth.Roles = _authorization.Model.Select(x => x.Roles).First();
+            AuthorizeConfigAttribute.AutorizeAttr = _authorization.Model.Select(x => x.Roles).First();
 
+            new List<int> { 1, 2 }.TakeWhile(x => x==7);
 
             if (data.Email == adminEmail && data.Password == adminPass)
             {
-                auth.Roles = _authorization.Model.Select(x => x.Roles).First();
-                auth.Roles.Insert(0, "s");
-                auth.Roles.Insert(1, "ad");
+                
 
                 foreach (var item in auth.Roles)
                 {
@@ -155,6 +157,21 @@ namespace WorkforceManagement.WebUI.Controllers
                     ModelState.AddModelError(string.Empty, "invalid email or password");
                     return View("Login");
             }
+
+
+            string userName = data.Email;
+            string[] userRoles = _roles.Model.Select(x => x.Name).ToArray();
+
+            ClaimsIdentity identity = new ClaimsIdentity();
+            ClaimsIdentity i = new ClaimsIdentity();
+
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userName));
+
+            userRoles.ToList().ForEach((role) => identity.AddClaim(new Claim(ClaimTypes.Role, role)));
+
+            identity.AddClaim(new Claim(ClaimTypes.Name, userName));
+
+            AuthenticationManager.SignIn(identity);
         }
 
         [Authorize(Roles = "Admin")]

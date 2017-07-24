@@ -14,22 +14,25 @@ using WorkforceManagement.WebUI.Authorization;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
-    [AllowAnonymous]
     public class HomeController : Controller
     {
         IRepository<Employee> _employee;
         IRepository<global::WorkforceManagement.Domain.Entities.AuthData> _authorization;
         private readonly EFDbContext _context;
+        
 
         public HomeController(EFDbContext context)
         {
+            AuthorizeConfigAttribute.AutorizeAttr = "Admin";
             _context = context;
             _employee = new EFModelContext<Employee>(_context);
             _authorization = new EFModelContext<global::WorkforceManagement.Domain.Entities.AuthData>(_context);
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [AuthorizeConfig("Admin")]
+        //[Authorize(Roles = "aaa")]
         public IActionResult Index()
         {
             ViewBag.IsAuthenticated = false;
