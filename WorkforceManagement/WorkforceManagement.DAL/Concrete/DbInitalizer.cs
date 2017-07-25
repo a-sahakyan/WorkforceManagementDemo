@@ -9,6 +9,7 @@ namespace WorkforceManagement.DAL.Concrete
         public static void Initalize(EFDbContext context)
         {
             context.Database.EnsureCreated();
+            ContextAccessor.Context = context;
         }
     }
 }

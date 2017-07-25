@@ -26,26 +26,9 @@ namespace WorkforceManagement.WebUI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsAuthenticated = false;
-            object o = _employee.DataPresenter;
-            foreach (var item in _authData.DataPresenter)
-            {
-
-            }
             ViewBag.IsAuthenticated = AuthorizationConfig.IsAuthenticated;
 
-            return View(o);
-        }
-
-       
-
-        public void Check()
-        {
-
-        }
-
-        public void SetRole()
-        {
-            AuthorizeAttribute role = new AuthorizeAttribute();
+            return View(_employee.DataPresenter);
         }
 
         [Authorize]

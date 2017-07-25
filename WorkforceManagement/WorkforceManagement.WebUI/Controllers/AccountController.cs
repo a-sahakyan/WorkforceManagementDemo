@@ -20,6 +20,90 @@ namespace WorkforceManagement.WebUI.Controllers
         IRepository<Employee> _employee = new ModelPresenter<Employee>();
         IRepository<AuthData> _authData = new ModelPresenter<AuthData>();
 
+        public IActionResult Forbidden()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Registration(Employee employee, AuthData authData)
+        {
+            if (ModelState.IsValid)
+            {
+                _employee.DataPresenter = new List<Employee>()
+                {
+                    new Employee() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
+                };
+
+                int id = _employee.DataPresenter.Select(x => x.EmployeeId).Last();
+
+                _authData.DataPresenter = new List<AuthData>()
+                {
+                    new AuthData() {EmployeeId=id, Email = authData.Email,Password=authData.Password,Roles="User"}
+                };
+
+                var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
+
+                AuthorizationConfig.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View("Registration");
+            }
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> Login(AuthData data)
+        //{
+        //    var role = new IdentityRole();
+        //    role.Name = "admin";
+        //    var userFromStorage = TestUserStorage.UserList
+        //        .FirstOrDefault(m => m. == userFromFore.Email && m.Password == userFromFore.Password);
+
+        //    if (userFromStorage != null)
+        //    {
+        //        //you can add all of ClaimTypes in this collection 
+        //        var claims = new List<Claim>()
+        //{
+        //    new Claim(ClaimTypes.Name,userFromStorage.Email) 
+        //    //,new Claim(ClaimTypes.Email,"emailaccount@microsoft.com")  
+        //};
+
+        //        //init the identity instances 
+        //        var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, "SuperSecureLogin"));
+
+        //        //signin 
+        //        await HttpContext.Authentication.SignInAsync("Cookie", userPrincipal, new AuthenticationProperties
+        //        {
+        //            ExpiresUtc = DateTime.UtcNow.AddMinutes(20),
+        //            IsPersistent = false,
+        //            AllowRefresh = false
+        //        });
+        //        AuthorizeAttribute a = new AuthorizeAttribute();
+        //        object o = a.Roles;
+
+
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    else
+        //    {
+        //        ViewBag.ErrMsg = "UserName or Password is invalid";
+
+        //        return View();
+        //    }
+        //}
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -66,14 +150,14 @@ namespace WorkforceManagement.WebUI.Controllers
 
 
             string userName = data.Email;
-            string[] userRoles = _roles.Model.Select(x => x.Name).ToArray();
+            //string[] userRoles = _roles.Model.Select(x => x.Name).ToArray();
 
             ClaimsIdentity identity = new ClaimsIdentity();
             ClaimsIdentity i = new ClaimsIdentity();
 
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userName));
 
-            userRoles.ToList().ForEach((role) => identity.AddClaim(new Claim(ClaimTypes.Role, role)));
+            //userRoles.ToList().ForEach((role) => identity.AddClaim(new Claim(ClaimTypes.Role, role)));
 
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
 
@@ -97,7 +181,5 @@ namespace WorkforceManagement.WebUI.Controllers
         //       new Employee { Email = "User1",Password = "112233"}
         //    };
         //}
-
-
     }
 }
