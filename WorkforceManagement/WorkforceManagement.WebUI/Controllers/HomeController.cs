@@ -31,7 +31,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
         [HttpGet]
         //[AllowAnonymous]
-        [AuthorizeConfig("Admin")]
+        //[AuthorizeConfig("Admin")]
         //[Authorize(Roles = "aaa")]
         public IActionResult Index()
         {
