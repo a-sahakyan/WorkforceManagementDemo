@@ -4,30 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using WorkforceManagement.Domain.Concrete;
-using WorkforceManagement.Domain.Abstract;
 using WorkforceManagement.Domain.Entities;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Security.Claims;
 using System.Data.SqlClient;
 using WorkforceManagement.WebUI.Authorization;
+using WorkforceManagement.BLL.DataProvider;
+using WorkforceManagement.DAL.Abstract;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        IRepository<Employee> _employee;
-        IRepository<global::WorkforceManagement.Domain.Entities.AuthData> _authorization;
-        private readonly EFDbContext _context;
-        
-
-        public HomeController(EFDbContext context)
-        {
-            AuthorizeConfigAttribute.AutorizeAttr = "Admin";
-            _context = context;
-            _employee = new EFModelContext<Employee>(_context);
-            _authorization = new EFModelContext<global::WorkforceManagement.Domain.Entities.AuthData>(_context);
-        }
+        IRepository<Employee> _employee = new ModelPresenter<Employee>();
+        IRepository<AuthData> _authData = new ModelPresenter<AuthData>();
 
         [HttpGet]
         //[AllowAnonymous]
@@ -36,8 +26,8 @@ namespace WorkforceManagement.WebUI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsAuthenticated = false;
-            object o = _employee.Model;
-            foreach (var item in _authorization.Model)
+            object o = _employee.DataPresenter;
+            foreach (var item in _authData.DataPresenter)
             {
 
             }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WorkforceManagement.Domain.Abstract;
 
-namespace WorkforceManagement.Domain.Concrete
+namespace WorkforceManagement.DAL.Concrete
 {
     public class DbInitalizer
     {

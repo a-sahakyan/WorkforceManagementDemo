@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using WorkforceManagement.Domain.Entities;
 
-namespace WorkforceManagement.Domain.Concrete
+namespace WorkforceManagement.DAL.Concrete
 {
     public class EFDbContext : DbContext
     {
@@ -12,8 +12,8 @@ namespace WorkforceManagement.Domain.Concrete
         {
         }
 
-       public DbSet<Employee> Employees { get; set; }
-       public DbSet<AuthData> AuthDatas { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<AuthData> AuthDatas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using WorkforceManagement.WebUI.Authorization;
-using WorkforceManagement.Domain.Concrete;
 using Microsoft.EntityFrameworkCore;
 using WorkforceManagement.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WorkforceManagement.DAL.Concrete;
 
 namespace WorkforceManagement.WebUI
 {

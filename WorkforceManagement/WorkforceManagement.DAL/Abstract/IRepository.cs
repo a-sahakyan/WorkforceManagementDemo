@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkforceManagement.Domain.Abstract
+namespace WorkforceManagement.DAL.Abstract
 {
     public interface IRepository<TModel> where TModel : class
     {
-        IEnumerable<TModel> Model { get; set; }
+        IEnumerable<TModel> DataPresenter { get; set; }
     }
 }
