@@ -20,7 +20,11 @@ else
 {
     var user = User.Identity as ClaimsIdentity;
 
-    <p>welcome @user.Name,@Html.ActionLink("Logout","Logout","Account")Logout</p>
+    <p>welcome @user.Name</p>
+   @using (Html.BeginForm("Logout","Account"))
+   {
+        <button class="btn-warning">Logout</button>
+   }
     <p>
         you can visit the authorize page, @Html.ActionLink("Login now", "Login", "Account") AuthPage
     </p>

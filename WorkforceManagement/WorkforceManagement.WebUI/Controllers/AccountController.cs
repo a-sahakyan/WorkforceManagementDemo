@@ -14,7 +14,7 @@ using WorkforceManagement.WebUI.Authorization;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private readonly EFDbContext _context;
@@ -171,15 +171,15 @@ namespace WorkforceManagement.WebUI.Controllers
 
             identity.AddClaim(new Claim(ClaimTypes.Name, userName));
 
-            AuthenticationManager.SignIn(identity);
+            //AuthenticationManager.SignIn(identity);
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> Logout()
+        //[Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "User")]
+        public IActionResult Logout()
         {
-            await HttpContext.Authentication.SignOutAsync("Cookie");
-            
+            //await HttpContext.Authentication.SignOutAsync("Cookie");
+            AuthorizationConfig.IsAuthenticated = false;
 
             return RedirectToAction("Index", "Home");
         }
