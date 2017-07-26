@@ -19,6 +19,6 @@ namespace WorkforceManagement.Domain.Entities
         [Required(ErrorMessage ="Please enter your password")]
         public string Password { get; set; }
 
-        public virtual EmployeeModel Employess { get; set; }
+        public virtual EmployeeModel Employees { get; set; }
     }
 }
