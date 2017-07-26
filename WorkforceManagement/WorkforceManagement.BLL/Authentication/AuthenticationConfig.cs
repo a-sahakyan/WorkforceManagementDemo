@@ -19,7 +19,7 @@ namespace WorkforceManagement.BLL.Authentication
                     new EmployeeModel() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
                 };
 
-            int id = _employee.DataHolder.Select(x => x.EmployeeId).Last();
+            int id = _employee.DataHolder.Select(x => x.EmployeeModelId).Last();
 
             _authData.DataHolder = new List<AuthDataModel>()
                 {

@@ -7,7 +7,7 @@ namespace WorkforceManagement.Domain.Entities
 {
     public class EmployeeModel
     {
-        public int EmployeeId { get; set; }
+        public int EmployeeModelId { get; set; }
 
         [MaxLength(50,ErrorMessage ="Your name is too long")]
         [Required(ErrorMessage ="Please enter your name")]

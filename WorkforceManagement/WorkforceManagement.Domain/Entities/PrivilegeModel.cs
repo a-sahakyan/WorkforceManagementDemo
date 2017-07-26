@@ -6,7 +6,7 @@ namespace WorkforceManagement.Domain.Entities
 {
     public class PrivilegeModel
     {
-        public int PrivilegeId { get; set; }
+        public int PrivilegeModelId { get; set; }
         public string ModuleName { get; set; }
     }
 }

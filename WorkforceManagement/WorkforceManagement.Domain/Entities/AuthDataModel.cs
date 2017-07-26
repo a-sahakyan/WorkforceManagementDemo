@@ -9,7 +9,7 @@ namespace WorkforceManagement.Domain.Entities
     {
         public int EmployeeId { get; set; }
 
-        public int AuthDataId { get; set; }
+        public int AuthDataModelId { get; set; }
         public string Roles { get; set; }
 
         [Required(ErrorMessage ="Please enter your email")]

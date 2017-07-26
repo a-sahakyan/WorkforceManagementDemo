@@ -6,7 +6,7 @@ namespace WorkforceManagement.Domain.Entities
 {
     public class RolesModel
     {
-        public int RolesId { get; set; }
+        public int RolesModelId { get; set; }
         public string Name { get; set; }
         public int PriviliegeId { get; set; }
     }
