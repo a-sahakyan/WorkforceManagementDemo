@@ -7,21 +7,31 @@ using WorkforceManagement.Domain.Entities;
 
 namespace WorkforceManagement.BLL.DataProvider
 {
-    public class ModelPresenter<TModel> : IRepository<TModel> where TModel : class
+    public class ModelPresenter<TModel> : IRepository<TModel> where TModel :class
     {
+        EFDbContext _context;
+
+        public ModelPresenter(EFDbContext context)
+        {
+            _context = context;
+        }
+
+        public ModelPresenter() { }
+        
+
         public IEnumerable<TModel> DataPresenter
         {
             get
             {
-                return ContextAccessor.Context.Set<TModel>();
+                return _context.Set<TModel>();
             }
             set
             {
                 foreach (var item in value)
                 {
-                    ContextAccessor.Context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                    _context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                 }
-                ContextAccessor.Context.SaveChanges();
+                _context.SaveChanges();
             }
         }
     }

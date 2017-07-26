@@ -16,6 +16,8 @@ using WorkforceManagement.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WorkforceManagement.DAL.Concrete;
+using WorkforceManagement.BLL.DataProvider;
+using WorkforceManagement.DAL.Abstract;
 
 namespace WorkforceManagement.WebUI
 {
@@ -49,6 +51,7 @@ namespace WorkforceManagement.WebUI
                 options.UseSqlServer(conn);
             });
 
+
             //    services.AddIdentity<ApplicationUser, IdentityRole>()
             //.AddEntityFrameworkStores<ApplicationDbContext>()
             //.AddDefaultTokenProviders();
@@ -62,7 +65,14 @@ namespace WorkforceManagement.WebUI
 
             //    config.Filters.Add(new AuthorizeFilter(policy));
             //});
+            //services.Add(new ServiceDescriptor(typeof(IRepository<Employee>), typeof(ModelPresenter<Employee>), ServiceLifetime.Transient));
+            services.AddTransient<IRepository<Employee>, ModelPresenter<Employee>>();
+            //services.AddTransient<IDataPresenter<Employee>, DataPresenter<Employee>>();
+            services.AddTransient<IDataPresenter<Employee>, DataProcessor<Employee>>();
             services.AddMvc();
+
+            //services.AddSingleton<IRepository<Employee>, ModelPresenter<Employee>>();
+
 
             //await CreateRoles(serviceProvider);
 
@@ -73,13 +83,11 @@ namespace WorkforceManagement.WebUI
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, EFDbContext context, IServiceProvider serviceProvider)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, EFDbContext context,IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
-
-           
-
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

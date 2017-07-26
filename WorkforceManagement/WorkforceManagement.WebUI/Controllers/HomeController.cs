@@ -17,8 +17,11 @@ namespace WorkforceManagement.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        IRepository<Employee> _employee = new ModelPresenter<Employee>();
-        IRepository<AuthData> _authData = new ModelPresenter<AuthData>();
+        IDataPresenter<Employee> _employee;
+        public HomeController(IDataPresenter<Employee> e)
+        {
+            _employee = e;
+        }
 
         [HttpGet]
         //[AllowAnonymous]
@@ -29,7 +32,7 @@ namespace WorkforceManagement.WebUI.Controllers
             ViewBag.IsAuthenticated = false;
             ViewBag.IsAuthenticated = AuthenticationConfig.IsAuthenticated;
 
-            return View(_employee.DataPresenter);
+            return View(_employee.DataHolder);
         }
 
         [Authorize]
