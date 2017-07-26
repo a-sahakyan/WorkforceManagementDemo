@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WorkforceManagement.Domain.Entities
 {
-    public class AuthData
+    public class AuthDataModel
     {
         public int EmployeeId { get; set; }
 
@@ -19,6 +19,6 @@ namespace WorkforceManagement.Domain.Entities
         [Required(ErrorMessage ="Please enter your password")]
         public string Password { get; set; }
 
-        public virtual Employee Employess { get; set; }
+        public virtual EmployeeModel Employess { get; set; }
     }
 }

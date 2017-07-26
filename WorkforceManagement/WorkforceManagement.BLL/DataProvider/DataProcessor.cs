@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using WorkforceManagement.DAL.Abstract;
-using WorkforceManagement.Domain.Entities;
 
 namespace WorkforceManagement.BLL.DataProvider
 {
-    public class DataProcessor<TModel> :  IDataPresenter<TModel> where TModel : class
+    public class DataProcessor<TModel> :  IDataPresenter<TModel> where TModel : class 
     {
         IRepository<TModel> _model;
 
@@ -19,6 +18,6 @@ namespace WorkforceManagement.BLL.DataProvider
         {
             get { return _model.DataPresenter; }
             set { _model.DataPresenter = value; }
-        }        
+        } 
     }
 }

@@ -14,10 +14,7 @@ namespace WorkforceManagement.BLL.DataProvider
         public ModelPresenter(EFDbContext context)
         {
             _context = context;
-        }
-
-        public ModelPresenter() { }
-        
+        }        
 
         public IEnumerable<TModel> DataPresenter
         {

@@ -12,13 +12,13 @@ namespace WorkforceManagement.DAL.Concrete
         {
         }
 
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<AuthData> AuthDatas { get; set; }
+        public DbSet<EmployeeModel> Employees { get; set; }
+        public DbSet<AuthDataModel> AuthDatas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>().ToTable("Employees");
-            modelBuilder.Entity<AuthData>().ToTable("AuthDatas");
+            modelBuilder.Entity<EmployeeModel>().ToTable("Employees");
+            modelBuilder.Entity<AuthDataModel>().ToTable("AuthDatas");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WorkforceManagement.Domain.Entities
 {
-    public class Employee
+    public class EmployeeModel
     {
         public int EmployeeId { get; set; }
 

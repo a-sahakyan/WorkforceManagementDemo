@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkforceManagement.Domain.Entities
 {
-    public class Privilege
+    public class PrivilegeModel
     {
         public int PrivilegeId { get; set; }
         public string ModuleName { get; set; }

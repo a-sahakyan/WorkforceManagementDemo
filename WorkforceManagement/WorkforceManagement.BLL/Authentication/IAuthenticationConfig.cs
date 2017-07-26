@@ -8,8 +8,8 @@ namespace WorkforceManagement.BLL.Authentication
 {
     public interface IAuthenticationConfig
     {
-        void Register(IDataPresenter<Employee> _employee, Employee employee, IDataPresenter<AuthData> _authData, AuthData authData);
+        void Register(IDataPresenter<EmployeeModel> _employee, EmployeeModel employee, IDataPresenter<AuthDataModel> _authData, AuthDataModel authData);
 
-        string SignIn(IDataPresenter<AuthData> _authData, AuthData authData);
+        string SignIn(IDataPresenter<AuthDataModel> _authData, AuthDataModel authData);
     }
 }

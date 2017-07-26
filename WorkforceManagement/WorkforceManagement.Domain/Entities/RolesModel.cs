@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkforceManagement.Domain.Entities
 {
-    public class Roles
+    public class RolesModel
     {
         public int RolesId { get; set; }
         public string Name { get; set; }

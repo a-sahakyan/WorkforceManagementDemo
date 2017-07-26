@@ -16,19 +16,18 @@ using WorkforceManagement.BLL.Authentication;
 namespace WorkforceManagement.WebUI.Controllers
 {
     //[Authorize]
-    public class AccountController : Controller
+    public class AccountController : Controller, IDisposable
     {
-        IDataPresenter<Employee> _employee;
-        IDataPresenter<AuthData> _authData;
+        IDataPresenter<EmployeeModel> _employee;
+        IDataPresenter<AuthDataModel> _authData;
         IAuthenticationConfig _authConfig;
-        
-        public AccountController(IDataPresenter<Employee> employee,IDataPresenter<AuthData> authData,IAuthenticationConfig authConfig)
+
+        public AccountController(IDataPresenter<EmployeeModel> employee,IDataPresenter<AuthDataModel> authData,IAuthenticationConfig authConfig)
         {
             _employee = employee;
             _authData = authData;
             _authConfig = authConfig;
         }
-
 
         public IActionResult Forbidden()
         {
@@ -44,7 +43,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Registration(Employee employee, AuthData authData)
+        public IActionResult Registration(EmployeeModel employee, AuthDataModel authData)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +112,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login(AuthData data)
+        public IActionResult Login(AuthDataModel data)
         {
             string role = _authConfig.SignIn(_authData, data);
 
@@ -131,7 +130,6 @@ namespace WorkforceManagement.WebUI.Controllers
                 ModelState.AddModelError(string.Empty, "invalid email or password");
                 return View("Login");
             }
-
 
             string userName = data.Email;
             //string[] userRoles = _roles.Model.Select(x => x.Name).ToArray();

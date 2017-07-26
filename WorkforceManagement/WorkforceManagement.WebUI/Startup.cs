@@ -67,19 +67,15 @@ namespace WorkforceManagement.WebUI
             //    config.Filters.Add(new AuthorizeFilter(policy));
             //});
             //services.Add(new ServiceDescriptor(typeof(IRepository<Employee>), typeof(ModelPresenter<Employee>), ServiceLifetime.Transient));
-            services.AddTransient<IRepository<Employee>, ModelPresenter<Employee>>();
-            services.AddTransient<IRepository<AuthData>, ModelPresenter<AuthData>>();
-            services.AddTransient<IDataPresenter<AuthData>, DataProcessor<AuthData>>();
-            services.AddTransient<IDataPresenter<Employee>, DataProcessor<Employee>>();
-            services.AddTransient<IAuthenticationConfig, AuthenticationConfig>();
+            services.AddScoped<IRepository<EmployeeModel>, ModelPresenter<EmployeeModel>>();
+            services.AddScoped<IRepository<AuthDataModel>, ModelPresenter<AuthDataModel>>();
+            services.AddScoped<IDataPresenter<AuthDataModel>, DataProcessor<AuthDataModel>>();
+            services.AddScoped<IDataPresenter<EmployeeModel>, DataProcessor<EmployeeModel>>();
+            services.AddScoped<IAuthenticationConfig, AuthenticationConfig>();
             services.AddMvc();
 
             //services.AddSingleton<IRepository<Employee>, ModelPresenter<Employee>>();
-
-
             //await CreateRoles(serviceProvider);
-
-
             //services.AddSingleton<IAuthorizationHandler, AdministratorsAuthorizationHandler>();
         }
 
@@ -113,7 +109,6 @@ namespace WorkforceManagement.WebUI
 
             //var _testUserPw = Configuration["SeedUserPW"];
 
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -123,7 +118,6 @@ namespace WorkforceManagement.WebUI
 
             DbInitalizer.Initalize(context);
         }
-
 
         //private async Task CreateRoles(IServiceProvider serviceProvider)
         //{
@@ -150,8 +144,6 @@ namespace WorkforceManagement.WebUI
 
         //    string userPassword = Configuration.GetSection("UserSettings")["UserPassword"];
 
-
-
         //    var _user = await userManager.FindByEmailAsync(Configuration.GetSection("UserSettings")["UserEmail"]);
 
         //    if (_user == null)
@@ -166,5 +158,4 @@ namespace WorkforceManagement.WebUI
         //    }
         //}
     }
-
 }
