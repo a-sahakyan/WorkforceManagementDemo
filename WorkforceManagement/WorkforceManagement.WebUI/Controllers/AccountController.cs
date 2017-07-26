@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WorkforceManagement.WebUI.Authorization;
 using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.DAL.Abstract;
+using WorkforceManagement.BLL.Authentication;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
@@ -19,6 +20,8 @@ namespace WorkforceManagement.WebUI.Controllers
     {
         IRepository<Employee> _employee = new ModelPresenter<Employee>();
         IRepository<AuthData> _authData = new ModelPresenter<AuthData>();
+        AuthenticationConfig pro = new AuthenticationConfig();
+
 
         public IActionResult Forbidden()
         {
@@ -38,21 +41,11 @@ namespace WorkforceManagement.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _employee.DataPresenter = new List<Employee>()
-                {
-                    new Employee() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
-                };
-
-                int id = _employee.DataPresenter.Select(x => x.EmployeeId).Last();
-
-                _authData.DataPresenter = new List<AuthData>()
-                {
-                    new AuthData() {EmployeeId=id, Email = authData.Email,Password=authData.Password,Roles="User"}
-                };
+                pro.Register(_employee, employee, _authData, authData);
 
                 var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
 
-                AuthorizationConfig.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
+                AuthenticationConfig.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -115,35 +108,19 @@ namespace WorkforceManagement.WebUI.Controllers
         [AllowAnonymous]
         public IActionResult Login(AuthData data)
         {
-            var adminEmail = _authData.DataPresenter.Select(x => x.Email).First();
-            var adminPass = _authData.DataPresenter.Select(x => x.Password).First();
-            AuthorizeAttribute auth = new AuthorizeAttribute();
-            auth.Roles = _authData.DataPresenter.Select(x => x.Roles).First();
-            AuthorizeConfigAttribute.AutorizeAttr = _authData.DataPresenter.Select(x => x.Roles).First();
+            string role = pro.SignIn(_authData, data);
 
-            new List<int> { 1, 2 }.TakeWhile(x => x == 7);
-
-            if (data.Email == adminEmail && data.Password == adminPass)
+            if (role == "admin")
             {
-
-
-                foreach (var item in auth.Roles)
-                {
-
-                }
                 return RedirectToAction("Index", "Admin");
             }
             else
             {
-                foreach (var item in _authData.DataPresenter)
+                if (role == "user")
                 {
-                    if (item.Email == data.Email && item.Password == data.Password)
-                    {
-                        AuthorizationConfig.IsAuthenticated = true;
-                        ViewBag.Hello = _authData.DataPresenter.Select(x => x.Employess.Name);
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
+
                 ModelState.AddModelError(string.Empty, "invalid email or password");
                 return View("Login");
             }
@@ -169,7 +146,7 @@ namespace WorkforceManagement.WebUI.Controllers
         public IActionResult Logout()
         {
             //await HttpContext.Authentication.SignOutAsync("Cookie");
-            AuthorizationConfig.IsAuthenticated = false;
+            AuthenticationConfig.IsAuthenticated = false;
 
             return RedirectToAction("Index", "Home");
         }

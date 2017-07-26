@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using WorkforceManagement.WebUI.Authorization;
 using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.DAL.Abstract;
+using WorkforceManagement.BLL.Authentication;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
@@ -26,7 +27,7 @@ namespace WorkforceManagement.WebUI.Controllers
         public IActionResult Index()
         {
             ViewBag.IsAuthenticated = false;
-            ViewBag.IsAuthenticated = AuthorizationConfig.IsAuthenticated;
+            ViewBag.IsAuthenticated = AuthenticationConfig.IsAuthenticated;
 
             return View(_employee.DataPresenter);
         }
