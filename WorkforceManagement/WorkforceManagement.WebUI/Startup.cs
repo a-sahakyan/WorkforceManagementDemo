@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WorkforceManagement.DAL.Concrete;
 using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.DAL.Abstract;
+using WorkforceManagement.BLL.Authentication;
 
 namespace WorkforceManagement.WebUI
 {
@@ -67,8 +68,10 @@ namespace WorkforceManagement.WebUI
             //});
             //services.Add(new ServiceDescriptor(typeof(IRepository<Employee>), typeof(ModelPresenter<Employee>), ServiceLifetime.Transient));
             services.AddTransient<IRepository<Employee>, ModelPresenter<Employee>>();
-            //services.AddTransient<IDataPresenter<Employee>, DataPresenter<Employee>>();
+            services.AddTransient<IRepository<AuthData>, ModelPresenter<AuthData>>();
+            services.AddTransient<IDataPresenter<AuthData>, DataProcessor<AuthData>>();
             services.AddTransient<IDataPresenter<Employee>, DataProcessor<Employee>>();
+            services.AddTransient<IAuthenticationConfig, AuthenticationConfig>();
             services.AddMvc();
 
             //services.AddSingleton<IRepository<Employee>, ModelPresenter<Employee>>();

@@ -18,9 +18,16 @@ namespace WorkforceManagement.WebUI.Controllers
     //[Authorize]
     public class AccountController : Controller
     {
-        IRepository<Employee> _employee = new ModelPresenter<Employee>();
-        IRepository<AuthData> _authData = new ModelPresenter<AuthData>();
-        AuthenticationConfig pro = new AuthenticationConfig();
+        IDataPresenter<Employee> _employee;
+        IDataPresenter<AuthData> _authData;
+        IAuthenticationConfig _authConfig;
+        
+        public AccountController(IDataPresenter<Employee> employee,IDataPresenter<AuthData> authData,IAuthenticationConfig authConfig)
+        {
+            _employee = employee;
+            _authData = authData;
+            _authConfig = authConfig;
+        }
 
 
         public IActionResult Forbidden()
@@ -41,7 +48,7 @@ namespace WorkforceManagement.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                pro.Register(_employee, employee, _authData, authData);
+                _authConfig.Register(_employee, employee, _authData, authData);
 
                 var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
 
@@ -108,7 +115,7 @@ namespace WorkforceManagement.WebUI.Controllers
         [AllowAnonymous]
         public IActionResult Login(AuthData data)
         {
-            string role = pro.SignIn(_authData, data);
+            string role = _authConfig.SignIn(_authData, data);
 
             if (role == "admin")
             {

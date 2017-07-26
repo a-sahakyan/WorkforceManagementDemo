@@ -18,9 +18,9 @@ namespace WorkforceManagement.WebUI.Controllers
     public class HomeController : Controller
     {
         IDataPresenter<Employee> _employee;
-        public HomeController(IDataPresenter<Employee> e)
+        public HomeController(IDataPresenter<Employee> employee)
         {
-            _employee = e;
+            _employee = employee;
         }
 
         [HttpGet]

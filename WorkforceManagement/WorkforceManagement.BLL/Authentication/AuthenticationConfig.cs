@@ -10,29 +10,29 @@ using System.Linq;
 
 namespace WorkforceManagement.BLL.Authentication
 {
-    public class AuthenticationConfig
+    public class AuthenticationConfig : IAuthenticationConfig
     {
         public static bool IsAuthenticated { get; set; }
 
-        public void Register(IRepository<Employee> _employee, Employee employee, IRepository<AuthData> _authData, AuthData authData)
+        public void Register(IDataPresenter<Employee> _employee, Employee employee, IDataPresenter<AuthData> _authData, AuthData authData)
         {
-            _employee.DataPresenter = new List<Employee>()
+            _employee.DataHolder = new List<Employee>()
                 {
                     new Employee() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
                 };
 
-            int id = _employee.DataPresenter.Select(x => x.EmployeeId).Last();
+            int id = _employee.DataHolder.Select(x => x.EmployeeId).Last();
 
-            _authData.DataPresenter = new List<AuthData>()
+            _authData.DataHolder = new List<AuthData>()
                 {
                     new AuthData() {EmployeeId=id, Email = authData.Email,Password=authData.Password,Roles="User"}
                 };
         }
 
-        public string SignIn(IRepository<AuthData> _authData,AuthData authData)
+        public string SignIn(IDataPresenter<AuthData> _authData,AuthData authData)
         {
-            var adminEmail = _authData.DataPresenter.Select(x => x.Email).First();
-            var adminPass = _authData.DataPresenter.Select(x => x.Password).First();
+            var adminEmail = _authData.DataHolder.Select(x => x.Email).First();
+            var adminPass = _authData.DataHolder.Select(x => x.Password).First();
             string role = "";
 
             if (authData.Email == adminEmail && authData.Password == adminPass)
@@ -41,7 +41,7 @@ namespace WorkforceManagement.BLL.Authentication
             }
             else
             {
-                foreach (var item in _authData.DataPresenter)
+                foreach (var item in _authData.DataHolder)
                 {
                     if (item.Email == authData.Email && item.Password == authData.Password)
                     {
