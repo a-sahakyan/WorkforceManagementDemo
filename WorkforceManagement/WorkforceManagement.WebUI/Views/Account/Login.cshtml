@@ -6,27 +6,17 @@
     <title></title>
 </head>
 <body>
-    @using (Html.BeginForm("Login","Account"))
+    @using (Html.BeginForm("Login", "Account"))
     {
-        @Html.ValidationSummary()
-        <table>
-            <tr>
-                <td></td>
-                <td>@ViewBag.ErrMsg</td>
-            </tr>
-            <tr>
-                <td>UserName</td>
-                <td>@Html.TextBoxFor(m => m.Email)</td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td>@Html.PasswordFor(m => m.Password)</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><button>Login</button></td>
-            </tr>
-        </table>
+        @ViewBag.ErrMsg
+        <br />
+        @Html.ValidationMessageFor(x=>x.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+        <br />
+        @Html.ValidationMessageFor(x=>x.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+        <br />
+        <button class="btn btn-group-xs">Login</button>
     }
 </body>
 </html>

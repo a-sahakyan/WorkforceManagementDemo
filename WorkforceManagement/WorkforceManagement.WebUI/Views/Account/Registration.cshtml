@@ -5,34 +5,28 @@
 @using (Html.BeginForm("Registration", "Account",FormMethod.Post))
 {
     @Html.ValidationSummary();
-    <label title="Email">Email:</label>
     <br />
-    <input type="text" name="email" size="30" />
+    <input type="text" placeholder="Email" class="form-control" name="email" size="30" />
     <br />
-    <label title="password">Password:</label>
+    <input  type="password" placeholder="Password" class="form-control" name="password"  size="30" />
     <br />
-    <input  type="password" name="password"  size="30" />
+    <input type="text" placeholder="Name" class="form-control" name="name"  size="30" />
     <br />
-    <label title="Name">Name:</label>
-    <br />
-    <input type="text" name="name"  size="30" />
-    <br />
-    <label title="Lastname">LastName:</label>
-    <br />
-    <input type="text" name="lastname"  size="30" />
+    <input type="text" placeholder="Last Name" class="form-control" name="lastname"  size="30" />
     <br />
     <label title="Birth">Birth:</label>
     <br />
-    <input type="date" name="Birth"  size="30" />
+    <input type="date" placeholder="Birth" class="form-control" name="Birth"  size="30" />
     <br />
     <label title="Profession">Profession:</label>
     <br />
-    <select name="Profession" >
+    <select name="Profession"  class="form-control">
         <option selected="selected">Programmer</option>
         <option>HR manager</option>
         <option>IT systems administrator</option>
         <option>IT Support Manager</option>
     </select>
-    <button type="submit" class="btn btn-success" value="submit">Create</button>
+    <br />
+    <button type="submit" style="margin-right:70px" class="btn btn-success" value="submit">Create</button>
 }
 
