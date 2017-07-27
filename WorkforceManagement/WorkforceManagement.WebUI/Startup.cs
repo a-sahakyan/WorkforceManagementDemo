@@ -19,6 +19,9 @@ using WorkforceManagement.DAL.Concrete;
 using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.DAL.Abstract;
 using WorkforceManagement.BLL.Authentication;
+using AutoMapper;
+using WorkforceManagement.ViewModel.ViewModels;
+using System.Diagnostics;
 
 namespace WorkforceManagement.WebUI
 {
@@ -72,7 +75,9 @@ namespace WorkforceManagement.WebUI
             services.AddScoped<IDataPresenter<AuthDataModel>, DataProcessor<AuthDataModel>>();
             services.AddScoped<IDataPresenter<EmployeeModel>, DataProcessor<EmployeeModel>>();
             services.AddScoped<IAuthenticationConfig, AuthenticationConfig>();
+            
             services.AddMvc();
+            services.AddAutoMapper(typeof(Startup));
 
             //services.AddSingleton<IRepository<Employee>, ModelPresenter<Employee>>();
             //await CreateRoles(serviceProvider);
@@ -84,6 +89,15 @@ namespace WorkforceManagement.WebUI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, EFDbContext context,IServiceProvider serviceProvider)
         {
+            //app.Use(async (context2, next) => //detect time
+            //{
+            //    var sw = new Stopwatch();
+            //    sw.Start();
+            //    await next.Invoke();
+            //    sw.Stop();
+            //    await context2.Response.WriteAsync(String.Format("<!-- {0} ms -->", sw.ElapsedMilliseconds));
+            //});
+
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
             

@@ -4,27 +4,45 @@ using System.Text;
 using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.Domain.Entities;
 using System.Linq;
-
+using AutoMapper;
+using WorkforceManagement.ViewModel.ViewModels;
 
 namespace WorkforceManagement.BLL.Authentication
 {
     public class AuthenticationConfig : IAuthenticationConfig
     {
+        //private IMapper _mapper;
+
+        //public AuthenticationConfig(IMapper mapper)
+        //{
+        //    _mapper = mapper;
+        //}
+
         public static bool IsAuthenticated { get; set; }
 
         public void Register(IDataPresenter<EmployeeModel> _employee, EmployeeModel employee, IDataPresenter<AuthDataModel> _authData, AuthDataModel authData)
         {
-            _employee.DataHolder = new List<EmployeeModel>()
-                {
-                    new EmployeeModel() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
-                };
+            EmployeeAuthDataViewModel m = new EmployeeAuthDataViewModel();
+            //var model = _mapper.Map<EmployeeModel, EmployeeAuthDataViewModel>(employee,m);
+            //_employee.DataHolder = new List<EmployeeModel>()
+            //    {
+            //        new EmployeeModel() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
+            //    };
+
+            //int id = _employee.DataHolder.Select(x => x.EmployeeModelId).Last();
+
+            //_authData.DataHolder = new List<AuthDataModel>()
+            //    {
+            //        new AuthDataModel() {EmployeeId=id, Email = authData.Email,Password=authData.Password,Roles="User"}
+            //    };
+
+            _employee.DataPusher = employee;
 
             int id = _employee.DataHolder.Select(x => x.EmployeeModelId).Last();
+            authData.Roles = "User";
+            authData.EmployeeId = id;
 
-            _authData.DataHolder = new List<AuthDataModel>()
-                {
-                    new AuthDataModel() {EmployeeId=id, Email = authData.Email,Password=authData.Password,Roles="User"}
-                };
+            _authData.DataPusher = authData;
         }
 
         public string SignIn(IDataPresenter<AuthDataModel> _authData,AuthDataModel authData)

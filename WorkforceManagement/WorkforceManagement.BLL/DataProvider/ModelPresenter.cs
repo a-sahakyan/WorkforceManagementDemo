@@ -31,5 +31,15 @@ namespace WorkforceManagement.BLL.DataProvider
                 _context.SaveChanges();
             }
         }
+
+        public TModel DataPusherConfig
+        {
+            set
+            {
+                _context.Entry(value).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                _context.SaveChanges();
+            }
+
+        }
     }
 }

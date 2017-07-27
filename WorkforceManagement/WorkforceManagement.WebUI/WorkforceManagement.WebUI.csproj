@@ -10,6 +10,8 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.2" />
@@ -29,5 +31,6 @@
 <ItemGroup>
   <ProjectReference Include="..\WorkforceManagement.BLL\WorkforceManagement.BLL.csproj" />
   <ProjectReference Include="..\WorkforceManagement.Domain\WorkforceManagement.Domain.csproj" />
+  <ProjectReference Include="..\WorkforceManagement.ViewModel\WorkforceManagement.ViewModel.csproj" />
 </ItemGroup>
 </Project>

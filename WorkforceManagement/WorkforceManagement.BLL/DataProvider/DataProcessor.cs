@@ -5,7 +5,7 @@ using WorkforceManagement.DAL.Abstract;
 
 namespace WorkforceManagement.BLL.DataProvider
 {
-    public class DataProcessor<TModel> :  IDataPresenter<TModel> where TModel : class 
+    public class DataProcessor<TModel> : IDataPresenter<TModel> where TModel : class
     {
         IRepository<TModel> _model;
 
@@ -18,6 +18,14 @@ namespace WorkforceManagement.BLL.DataProvider
         {
             get { return _model.DataPresenter; }
             set { _model.DataPresenter = value; }
-        } 
+        }
+
+        public TModel DataPusher
+        {
+            set { _model.DataPusherConfig = value; }
+        }
+
+
+
     }
 }

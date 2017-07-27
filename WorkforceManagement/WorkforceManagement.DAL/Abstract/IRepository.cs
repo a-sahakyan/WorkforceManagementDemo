@@ -7,5 +7,6 @@ namespace WorkforceManagement.DAL.Abstract
     public interface IRepository<TModel>  where TModel :class
     {
         IEnumerable<TModel> DataPresenter { get; set; }
+        TModel DataPusherConfig { set; }
     }
 }
