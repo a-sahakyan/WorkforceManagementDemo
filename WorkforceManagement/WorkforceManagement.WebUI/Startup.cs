@@ -77,7 +77,14 @@ namespace WorkforceManagement.WebUI
             services.AddScoped<IAuthenticationConfig, AuthenticationConfig>();
             
             services.AddMvc();
+            //AutoMapper.Mapper.Initialize(cfg =>
+            //{
+            //    cfg.CreateMap<EmployeeModel, EmployeeAuthDataViewModel>()
+            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.Name} {src.LastName}"))
+            //    .ForMember(dest => dest.Birth, opt => opt.MapFrom(src => src.Birth));
+            //});
             services.AddAutoMapper(typeof(Startup));
+
 
             //services.AddSingleton<IRepository<Employee>, ModelPresenter<Employee>>();
             //await CreateRoles(serviceProvider);
@@ -109,6 +116,13 @@ namespace WorkforceManagement.WebUI
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<EmployeeModel, EmployeeAuthDataViewModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+                cfg.CreateMap<EmployeeAuthDataViewModel, EmployeeModel>();
+            });
 
             //app.UseCookieAuthentication(new CookieAuthenticationOptions
             //{
