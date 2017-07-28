@@ -83,7 +83,7 @@ namespace WorkforceManagement.WebUI
             //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => $"{src.Name} {src.LastName}"))
             //    .ForMember(dest => dest.Birth, opt => opt.MapFrom(src => src.Birth));
             //});
-            services.AddAutoMapper(typeof(Startup));
+            //services.AddAutoMapper(typeof(Startup));
 
 
             //services.AddSingleton<IRepository<Employee>, ModelPresenter<Employee>>();
@@ -121,7 +121,7 @@ namespace WorkforceManagement.WebUI
             {
                 cfg.CreateMap<EmployeeModel, EmployeeAuthDataViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
-                cfg.CreateMap<EmployeeAuthDataViewModel, EmployeeModel>();
+                //cfg.CreateMap<EmployeeAuthDataViewModel, EmployeeModel>();
             });
 
             //app.UseCookieAuthentication(new CookieAuthenticationOptions

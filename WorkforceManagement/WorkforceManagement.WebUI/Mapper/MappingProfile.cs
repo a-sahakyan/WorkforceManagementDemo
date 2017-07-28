@@ -9,11 +9,14 @@ using WorkforceManagement.ViewModel.ViewModels;
 
 namespace WorkforceManagement.WebUI.Mapper
 {
-    //public class MappingProfile : Profile
-    //{
-    //    //public MappingProfile()
-    //    //{
-    //    //    CreateMap<EmployeeModel, EmployeeAuthDataViewModel>();
-    //    //}
-    //}
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            EmployeeAuthDataViewModel m = new EmployeeAuthDataViewModel();
+            EmployeeModel e = new EmployeeModel();
+            CreateMap<IEnumerable<EmployeeAuthDataViewModel>, EmployeeModel>();
+        }
+    }
 }
+

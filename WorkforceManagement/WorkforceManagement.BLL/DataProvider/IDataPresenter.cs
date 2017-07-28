@@ -7,7 +7,7 @@ namespace WorkforceManagement.BLL.DataProvider
 {
     public interface IDataPresenter<TModel> where TModel : class 
     {
-        IEnumerable<TModel> DataHolder { get; set; }
+        IEnumerable<TModel> DataHolder { get;}
 
         TModel DataPusher { set; }
     }

@@ -22,14 +22,6 @@ namespace WorkforceManagement.BLL.DataProvider
             {
                 return _context.Set<TModel>();
             }
-            set
-            {
-                foreach (var item in value)
-                {
-                    _context.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-                }
-                _context.SaveChanges();
-            }
         }
 
         public TModel DataPusherConfig

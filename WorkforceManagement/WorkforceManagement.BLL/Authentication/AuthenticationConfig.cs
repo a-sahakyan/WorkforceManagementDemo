@@ -11,31 +11,18 @@ namespace WorkforceManagement.BLL.Authentication
 {
     public class AuthenticationConfig : Profile, IAuthenticationConfig
     {
-        private IMapper _mapper;
+        //private IMapper _mapper;
 
-        public AuthenticationConfig(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
+        //public AuthenticationConfig(IMapper mapper)
+        //{
+        //    _mapper = mapper;
+        //}
 
         public static bool IsAuthenticated { get; set; }
 
         public void Register(IDataPresenter<EmployeeModel> _employee, EmployeeModel employee, IDataPresenter<AuthDataModel> _authData, AuthDataModel authData)
         {
-           EmployeeAuthDataViewModel m = new EmployeeAuthDataViewModel();
-            var a = base.Map<IEnumerable<EmployeeAuthDataViewModel>>(m);
-            //var model = _mapper.Map<EmployeeModel, EmployeeAuthDataViewModel>(employee, x=> new EmployeeModel { Birth = x.});
-            //_employee.DataHolder = new List<EmployeeModel>()
-            //    {
-            //        new EmployeeModel() {Name = employee.Name,LastName=employee.LastName,Birth=employee.Birth,Profession=employee.Profession}
-            //    };
-
-            //int id = _employee.DataHolder.Select(x => x.EmployeeModelId).Last();
-
-            //_authData.DataHolder = new List<AuthDataModel>()
-            //    {
-            //        new AuthDataModel() {EmployeeId=id, Email = authData.Email,Password=authData.Password,Roles="User"}
-            //    };
+           var a = Mapper.Map<EmployeeAuthDataViewModel>(employee);
 
             _employee.DataPusher = employee;
 

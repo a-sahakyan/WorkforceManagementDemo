@@ -21,13 +21,12 @@ namespace WorkforceManagement.WebUI.Controllers
     {
         IDataPresenter<EmployeeModel> _employee;
         IDataPresenter<AuthDataModel> _authData;
-        IMapper _mapper;
 
-        public HomeController(IDataPresenter<EmployeeModel> employee,IDataPresenter<AuthDataModel> authData,IMapper mapper)
+        public HomeController(IDataPresenter<EmployeeModel> employee,IDataPresenter<AuthDataModel> authData)
         {
             _employee = employee;
             _authData = authData;
-            _mapper = mapper;
+
             //var u = _employee.DataHolder.First();
 
             //var model = _mapper.Map<EmployeeModel, EmployeeAuthDataViewModel>(u);

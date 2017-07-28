@@ -17,7 +17,6 @@ namespace WorkforceManagement.BLL.DataProvider
         public IEnumerable<TModel> DataHolder
         {
             get { return _model.DataPresenter; }
-            set { _model.DataPresenter = value; }
         }
 
         public TModel DataPusher
