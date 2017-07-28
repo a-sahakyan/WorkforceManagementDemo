@@ -10,27 +10,21 @@ using System.Security.Claims;
 using System.Data.SqlClient;
 using WorkforceManagement.WebUI.Authorization;
 using WorkforceManagement.BLL.DataProvider;
-using WorkforceManagement.DAL.Abstract;
 using WorkforceManagement.BLL.Authentication;
 using AutoMapper;
-using WorkforceManagement.ViewModel.ViewModels;
+using WorkforceManagement.DTO.Models;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        IDataPresenter<EmployeeModel> _employee;
-        IDataPresenter<AuthDataModel> _authData;
+        IDataPresenter<Employee> _employee;
+        IDataPresenter<AuthData> _authData;
 
-        public HomeController(IDataPresenter<EmployeeModel> employee,IDataPresenter<AuthDataModel> authData)
+        public HomeController(IDataPresenter<Employee> employee, IDataPresenter<AuthData> authData)
         {
             _employee = employee;
             _authData = authData;
-
-            //var u = _employee.DataHolder.First();
-
-            //var model = _mapper.Map<EmployeeModel, EmployeeAuthDataViewModel>(u);
-            //int a = 12;
         }
 
         [HttpGet]
@@ -39,10 +33,11 @@ namespace WorkforceManagement.WebUI.Controllers
         //[Authorize(Roles = "aaa")]
         public IActionResult Index()
         {
+            var  model = AutoMapper.Mapper.Map<IEnumerable<EmployeeDto>>(_employee.Data.Get);
             ViewBag.IsAuthenticated = false;
             ViewBag.IsAuthenticated = AuthenticationConfig.IsAuthenticated;
 
-            return View(_employee.DataHolder);
+            return View(model);
         }
 
         [Authorize]

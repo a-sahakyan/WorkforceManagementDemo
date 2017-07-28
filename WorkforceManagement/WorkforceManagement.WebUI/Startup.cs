@@ -17,11 +17,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WorkforceManagement.DAL.Concrete;
 using WorkforceManagement.BLL.DataProvider;
-using WorkforceManagement.DAL.Abstract;
 using WorkforceManagement.BLL.Authentication;
 using AutoMapper;
-using WorkforceManagement.ViewModel.ViewModels;
 using System.Diagnostics;
+using WorkforceManagement.DTO.Models;
+using WorkforceManagement.DAL.DataProvider;
 
 namespace WorkforceManagement.WebUI
 {
@@ -70,10 +70,10 @@ namespace WorkforceManagement.WebUI
             //    config.Filters.Add(new AuthorizeFilter(policy));
             //});
             //services.Add(new ServiceDescriptor(typeof(IRepository<Employee>), typeof(ModelPresenter<Employee>), ServiceLifetime.Transient));
-            services.AddScoped<IRepository<EmployeeModel>, ModelPresenter<EmployeeModel>>();
-            services.AddScoped<IRepository<AuthDataModel>, ModelPresenter<AuthDataModel>>();
-            services.AddScoped<IDataPresenter<AuthDataModel>, DataProcessor<AuthDataModel>>();
-            services.AddScoped<IDataPresenter<EmployeeModel>, DataProcessor<EmployeeModel>>();
+            services.AddScoped<IRepository<Employee>, Repository<Employee>>();
+            services.AddScoped<IRepository<AuthData>, Repository<AuthData>>();
+            services.AddScoped<IDataPresenter<AuthData>, DataPresenter<AuthData>>();
+            services.AddScoped<IDataPresenter<Employee>, DataPresenter<Employee>>();
             services.AddScoped<IAuthenticationConfig, AuthenticationConfig>();
             
             services.AddMvc();
@@ -94,7 +94,7 @@ namespace WorkforceManagement.WebUI
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, EFDbContext context,IServiceProvider serviceProvider)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, EFDbContext context, IServiceProvider serviceProvider)
         {
             //app.Use(async (context2, next) => //detect time
             //{
@@ -107,7 +107,7 @@ namespace WorkforceManagement.WebUI
 
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -119,33 +119,33 @@ namespace WorkforceManagement.WebUI
 
             AutoMapper.Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<EmployeeModel, EmployeeAuthDataViewModel>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
-                //cfg.CreateMap<EmployeeAuthDataViewModel, EmployeeModel>();
+                cfg.CreateMap<Employee, EmployeeDto>().ForMember(x => x.Name, des => des.MapFrom(src => src.Name));
+                
+                //cfg.CreateMap<IEnumerable<Employee>, IEnumerable<EmployeeDto>>();
+                //app.UseCookieAuthentication(new CookieAuthenticationOptions
+                //{
+                //    AuthenticationScheme = "Cookie",
+                //    LoginPath = new PathString("/Account/Login"),
+                //    AccessDeniedPath = new PathString("/Account/Forbidden"),
+                //    AutomaticAuthenticate = true,
+                //    AutomaticChallenge = true
+                //});
             });
 
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions
-            //{
-            //    AuthenticationScheme = "Cookie",
-            //    LoginPath = new PathString("/Account/Login"),
-            //    AccessDeniedPath = new PathString("/Account/Forbidden"),
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true
-            //});
+                app.UseStaticFiles();
 
-            app.UseStaticFiles();
+                //var _testUserPw = Configuration["SeedUserPW"];
 
-            //var _testUserPw = Configuration["SeedUserPW"];
+                app.UseMvc(routes =>
+                {
+                    routes.MapRoute(
+                        name: "default",
+                        template: "{controller=Home}/{action=Index}/{id?}");
+                });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-            DbInitalizer.Initalize(context);
-        }
+                DbInitalizer.Initalize(context);
+            }
+            
 
         //private async Task CreateRoles(IServiceProvider serviceProvider)
         //{

@@ -10,19 +10,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WorkforceManagement.WebUI.Authorization;
 using WorkforceManagement.BLL.DataProvider;
-using WorkforceManagement.DAL.Abstract;
 using WorkforceManagement.BLL.Authentication;
+
 
 namespace WorkforceManagement.WebUI.Controllers
 {
     //[Authorize]
     public class AccountController : Controller, IDisposable
     {
-        IDataPresenter<EmployeeModel> _employee;
-        IDataPresenter<AuthDataModel> _authData;
+        IDataPresenter<Employee> _employee;
+        IDataPresenter<AuthData> _authData;
         IAuthenticationConfig _authConfig;
 
-        public AccountController(IDataPresenter<EmployeeModel> employee,IDataPresenter<AuthDataModel> authData,IAuthenticationConfig authConfig)
+        public AccountController(IDataPresenter<Employee> employee,IDataPresenter<AuthData> authData,IAuthenticationConfig authConfig)
         {
             _employee = employee;
             _authData = authData;
@@ -43,7 +43,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Registration(EmployeeModel employee, AuthDataModel authData)
+        public IActionResult Registration(Employee employee, AuthData authData)
         {
             if (ModelState.IsValid)
             {
@@ -112,7 +112,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login(AuthDataModel data)
+        public IActionResult Login(AuthData data)
         {
             string role = _authConfig.SignIn(_authData, data);
 

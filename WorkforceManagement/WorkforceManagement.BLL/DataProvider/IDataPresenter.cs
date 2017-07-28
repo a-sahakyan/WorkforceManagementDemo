@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using WorkforceManagement.DAL.Abstract;
+using WorkforceManagement.DAL.DataProvider;
 
 namespace WorkforceManagement.BLL.DataProvider
 {
-    public interface IDataPresenter<TModel> where TModel : class 
+    public interface IDataPresenter<TModel>  where TModel : class 
     {
-        IEnumerable<TModel> DataHolder { get;}
-
-        TModel DataPusher { set; }
+        IRepository<TModel> Data { get; }
     }
 }

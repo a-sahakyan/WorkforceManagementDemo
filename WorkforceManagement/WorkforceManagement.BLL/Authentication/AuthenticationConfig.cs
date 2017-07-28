@@ -5,38 +5,31 @@ using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.Domain.Entities;
 using System.Linq;
 using AutoMapper;
-using WorkforceManagement.ViewModel.ViewModels;
+using WorkforceManagement.DTO.Models;
 
 namespace WorkforceManagement.BLL.Authentication
 {
     public class AuthenticationConfig : Profile, IAuthenticationConfig
     {
-        //private IMapper _mapper;
-
-        //public AuthenticationConfig(IMapper mapper)
-        //{
-        //    _mapper = mapper;
-        //}
-
         public static bool IsAuthenticated { get; set; }
 
-        public void Register(IDataPresenter<EmployeeModel> _employee, EmployeeModel employee, IDataPresenter<AuthDataModel> _authData, AuthDataModel authData)
+        public void Register(IDataPresenter<Employee> _employee, Employee employee, IDataPresenter<AuthData> _authData, AuthData authData)
         {
-           var a = Mapper.Map<EmployeeAuthDataViewModel>(employee);
+           var a = Mapper.Map<EmployeeDto>(employee);
 
-            _employee.DataPusher = employee;
+            _employee.Data.Insert(employee);
 
-            int id = _employee.DataHolder.Select(x => x.EmployeeModelId).Last();
+            int id = _employee.Data.Get.Select(x => x.EmployeeId).Last();
             authData.Roles = "User";
             authData.EmployeeId = id;
 
-            _authData.DataPusher = authData;
+            _authData.Data.Insert(authData);
         }
 
-        public string SignIn(IDataPresenter<AuthDataModel> _authData,AuthDataModel authData)
+        public string SignIn(IDataPresenter<AuthData> _authData,AuthData authData)
         {
-            var adminEmail = _authData.DataHolder.Select(x => x.Email).First();
-            var adminPass = _authData.DataHolder.Select(x => x.Password).First();
+            var adminEmail = _authData.Data.Get.Select(x => x.Email).First();
+            var adminPass = _authData.Data.Get.Select(x => x.Password).First();
             string role = "";
 
             if (authData.Email == adminEmail && authData.Password == adminPass)
@@ -45,7 +38,7 @@ namespace WorkforceManagement.BLL.Authentication
             }
             else
             {
-                foreach (var item in _authData.DataHolder)
+                foreach (var item in _authData.Data.Get)
                 {
                     if (item.Email == authData.Email && item.Password == authData.Password)
                     {

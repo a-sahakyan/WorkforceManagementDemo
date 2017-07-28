@@ -8,9 +8,9 @@ using WorkforceManagement.Domain.Entities;
 
 namespace WorkforceManagement.WebUI.Authorization
 {
-    public class AdministratorsAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, EmployeeModel>
+    public class AdministratorsAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, Employee>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement, EmployeeModel resource)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement, Employee resource)
         {
             if (context.User == null)
             {

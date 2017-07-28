@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +30,6 @@
 <ItemGroup>
   <ProjectReference Include="..\WorkforceManagement.BLL\WorkforceManagement.BLL.csproj" />
   <ProjectReference Include="..\WorkforceManagement.Domain\WorkforceManagement.Domain.csproj" />
-  <ProjectReference Include="..\WorkforceManagement.ViewModel\WorkforceManagement.ViewModel.csproj" />
+  <ProjectReference Include="..\WorkforceManagement.DTO\WorkforceManagement.DTO.csproj" />
 </ItemGroup>
 </Project>
