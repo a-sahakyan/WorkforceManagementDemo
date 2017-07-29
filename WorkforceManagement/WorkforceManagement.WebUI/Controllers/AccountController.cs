@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
-using WorkforceManagement.BLL.Authentication;
-using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
@@ -15,12 +13,12 @@ namespace WorkforceManagement.WebUI.Controllers
     {
         IMapLogic<Employee, EmployeeDto> _employeeDtoMap;
         IMapLogic<AuthData, AuthDataDto> _authDataMap;
-        IAuthenticationConfig _authConfig;
+        IAuthenticationLogic _authentication;
 
-        public AccountController(IAuthenticationConfig authConfig,IMapLogic<Employee,EmployeeDto> employeeDtoMap)
+        public AccountController(IAuthenticationLogic authentication,IMapLogic<Employee,EmployeeDto> employeeDtoMap)
         {
             _employeeDtoMap = employeeDtoMap;
-            _authConfig = authConfig;
+            _authentication = authentication;
         }
 
         public IActionResult Forbidden()
@@ -41,11 +39,11 @@ namespace WorkforceManagement.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _authConfig.Register(employee,authData);
+                _authentication.Register(employee,authData);
 
                 var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
 
-                AuthenticationConfig.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
+                AuthenticationLogic.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -108,7 +106,7 @@ namespace WorkforceManagement.WebUI.Controllers
         [AllowAnonymous]
         public IActionResult Login(AuthData data)
         {
-            string role = _authConfig.SignIn(data);
+            string role = _authentication.SignIn(data);
 
             if (role == "admin")
             {
@@ -145,7 +143,7 @@ namespace WorkforceManagement.WebUI.Controllers
         public IActionResult Logout()
         {
             //await HttpContext.Authentication.SignOutAsync("Cookie");
-            AuthenticationConfig.IsAuthenticated = false;
+            AuthenticationLogic.IsAuthenticated = false;
 
             return RedirectToAction("Index", "Home");
         }

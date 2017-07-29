@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkforceManagement.BLL.DataProvider;
-using WorkforceManagement.Domain.Entities;
-using System.Linq;
-using AutoMapper;
+﻿using System.Linq;
 using WorkforceManagement.DAL.DataProvider;
+using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
-using WorkforceManagement.BLL.Logic;
 
-namespace WorkforceManagement.BLL.Authentication
+namespace WorkforceManagement.BLL.Logic
 {
-    public class AuthenticationConfig :  IAuthenticationConfig
+    public class AuthenticationLogic : IAuthenticationLogic
     {
-        private IMapLogic<Employee,EmployeeDto> _mapperEmployee;
+        private IMapLogic<Employee, EmployeeDto> _mapperEmployee;
         private IMapLogic<AuthData, AuthDataDto> _mapperAuthData;
         private IRepository<Employee> _employee;
         private IRepository<AuthData> _authData;
 
-        public AuthenticationConfig(IMapLogic<Employee,EmployeeDto> mapperEmployee,IMapLogic<AuthData,AuthDataDto> mapperAuthData,
-            IRepository<Employee> employee,IRepository<AuthData> authData)
+        public AuthenticationLogic(IMapLogic<Employee, EmployeeDto> mapperEmployee, IMapLogic<AuthData, AuthDataDto> mapperAuthData,
+            IRepository<Employee> employee, IRepository<AuthData> authData)
         {
             _mapperEmployee = mapperEmployee;
             _mapperAuthData = mapperAuthData;
@@ -29,9 +23,9 @@ namespace WorkforceManagement.BLL.Authentication
 
         public static bool IsAuthenticated { get; set; }
 
-        public void Register(EmployeeDto employee,AuthDataDto authData)
+        public void Register(EmployeeDto employee, AuthDataDto authData)
         {
-            var newEmployee = _mapperEmployee.MapEntitySingle(employee);
+            var newEmployee = _mapperEmployee.Map(employee);
 
             _employee.Insert(newEmployee);
 
@@ -40,7 +34,7 @@ namespace WorkforceManagement.BLL.Authentication
             authData.EmployeeId = id;
 
 
-            var newAuthData = _mapperAuthData.MapEntitySingle(authData);
+            var newAuthData = _mapperAuthData.Map(authData);
 
             _authData.Insert(newAuthData);
         }
@@ -61,7 +55,7 @@ namespace WorkforceManagement.BLL.Authentication
                 {
                     if (item.Email == authData.Email && item.Password == authData.Password)
                     {
-                        AuthenticationConfig.IsAuthenticated = true;
+                        AuthenticationLogic.IsAuthenticated = true;
                         role = "user";
                         break;
                     }
@@ -71,3 +65,4 @@ namespace WorkforceManagement.BLL.Authentication
         }
     }
 }
+

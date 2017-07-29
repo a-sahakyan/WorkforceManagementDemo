@@ -5,8 +5,8 @@ namespace WorkforceManagement.BLL.Logic
 {
     public interface IMapLogic<TSource, TDestination> where TSource : class where TDestination : class
     {
-        IEnumerable<TDestination> MapEntity();
+        IEnumerable<TDestination> MapAll();
 
-        TSource MapEntitySingle(TDestination entity);
+        TSource Map(TDestination entity);
     }
 }

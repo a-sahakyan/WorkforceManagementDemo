@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using WorkforceManagement.BLL.Authentication;
-using WorkforceManagement.BLL.DataProvider;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.DAL.Concrete;
 using WorkforceManagement.DAL.DataProvider;
@@ -63,11 +60,9 @@ namespace WorkforceManagement.WebUI
             //services.Add(new ServiceDescriptor(typeof(IRepository<Employee>), typeof(ModelPresenter<Employee>), ServiceLifetime.Transient));
             services.AddScoped<IRepository<Employee>, Repository<Employee>>();
             services.AddScoped<IRepository<AuthData>, Repository<AuthData>>();
-            services.AddScoped<IDataPresenter<AuthData>, DataPresenter<AuthData>>();
-            services.AddScoped<IDataPresenter<Employee>, DataPresenter<Employee>>();
             services.AddScoped<IMapLogic<Employee,EmployeeDto>, MapLogic<Employee,EmployeeDto>>();
             services.AddScoped<IMapLogic<AuthData,AuthDataDto>, MapLogic<AuthData,AuthDataDto>>();
-            services.AddScoped<IAuthenticationConfig, AuthenticationConfig>();
+            services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
 
 
             services.AddMvc();

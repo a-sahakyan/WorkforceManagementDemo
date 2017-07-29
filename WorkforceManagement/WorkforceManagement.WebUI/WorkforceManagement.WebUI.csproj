@@ -4,10 +4,6 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="wwwroot\lib\sweetalertCustom\sweetalertC.js" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WorkforceManagement.BLL.Authentication;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
@@ -21,9 +20,9 @@ namespace WorkforceManagement.WebUI.Controllers
         //[AuthorizeConfig("Admin")]
         public IActionResult Index()
         {
-            var employeeDto = _mapper.MapEntity();
+            var employeeDto = _mapper.MapAll();
             ViewBag.IsAuthenticated = false;
-            ViewBag.IsAuthenticated = AuthenticationConfig.IsAuthenticated;
+            ViewBag.IsAuthenticated = AuthenticationLogic.IsAuthenticated;
 
             return View(employeeDto);
         }
