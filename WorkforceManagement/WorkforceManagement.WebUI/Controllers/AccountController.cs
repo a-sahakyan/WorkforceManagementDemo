@@ -1,31 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using WorkforceManagement.Domain.Entities;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using WorkforceManagement.WebUI.Authorization;
-using WorkforceManagement.BLL.DataProvider;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
 using WorkforceManagement.BLL.Authentication;
-
+using WorkforceManagement.BLL.DataProvider;
+using WorkforceManagement.BLL.Logic;
+using WorkforceManagement.Domain.Entities;
+using WorkforceManagement.DTO.Models;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
     //[Authorize]
     public class AccountController : Controller, IDisposable
     {
-        IDataPresenter<Employee> _employee;
-        IDataPresenter<AuthData> _authData;
+        IMapLogic<Employee, EmployeeDto> _employeeDtoMap;
+        IMapLogic<AuthData, AuthDataDto> _authDataMap;
         IAuthenticationConfig _authConfig;
 
-        public AccountController(IDataPresenter<Employee> employee,IDataPresenter<AuthData> authData,IAuthenticationConfig authConfig)
+        public AccountController(IAuthenticationConfig authConfig,IMapLogic<Employee,EmployeeDto> employeeDtoMap)
         {
-            _employee = employee;
-            _authData = authData;
+            _employeeDtoMap = employeeDtoMap;
             _authConfig = authConfig;
         }
 
@@ -43,11 +37,11 @@ namespace WorkforceManagement.WebUI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Registration(Employee employee, AuthData authData)
+        public IActionResult Registration(EmployeeDto employee, AuthDataDto authData)
         {
             if (ModelState.IsValid)
             {
-                _authConfig.Register(_employee, employee, _authData, authData);
+                _authConfig.Register(employee,authData);
 
                 var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
 
@@ -114,7 +108,7 @@ namespace WorkforceManagement.WebUI.Controllers
         [AllowAnonymous]
         public IActionResult Login(AuthData data)
         {
-            string role = _authConfig.SignIn(_authData, data);
+            string role = _authConfig.SignIn(data);
 
             if (role == "admin")
             {

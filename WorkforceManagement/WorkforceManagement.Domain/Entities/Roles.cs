@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WorkforceManagement.Domain.Entities
+﻿namespace WorkforceManagement.Domain.Entities
 {
     public class Roles
     {

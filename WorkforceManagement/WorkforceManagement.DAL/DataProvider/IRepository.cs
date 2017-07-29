@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace WorkforceManagement.DAL.DataProvider
 {
@@ -8,9 +6,7 @@ namespace WorkforceManagement.DAL.DataProvider
     {
         TModel GetById { get; }
 
-        IEnumerable<TModel> Get { get; }
-
-        //getbyid, get, insert, delete, update
+        IEnumerable<TModel> GetAll();
 
         void Insert(TModel data);
 

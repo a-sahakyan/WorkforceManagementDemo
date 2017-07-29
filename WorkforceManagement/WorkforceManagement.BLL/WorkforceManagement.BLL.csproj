@@ -14,8 +14,4 @@
     <ProjectReference Include="..\WorkforceManagement.DTO\WorkforceManagement.DTO.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Logic\" />
-  </ItemGroup>
-
 </Project>

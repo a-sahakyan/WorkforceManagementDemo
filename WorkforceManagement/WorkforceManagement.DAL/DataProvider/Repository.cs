@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using WorkforceManagement.DAL.Concrete;
 
 namespace WorkforceManagement.DAL.DataProvider
@@ -16,9 +15,9 @@ namespace WorkforceManagement.DAL.DataProvider
 
         public TModel GetById => throw new NotImplementedException();
 
-        public IEnumerable<TModel> Get
+        public IEnumerable<TModel> GetAll()
         {
-            get { return _context.Set<TModel>(); }
+             return _context.Set<TModel>(); 
         }
 
         public void Delete(TModel data)

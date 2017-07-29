@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkforceManagement.DAL.DataProvider;
-using WorkforceManagement.Domain.Entities;
+﻿using WorkforceManagement.DAL.DataProvider;
 
 namespace WorkforceManagement.BLL.DataProvider
 {

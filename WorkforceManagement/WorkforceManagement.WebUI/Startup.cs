@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.Extensions.Configuration;
-using WorkforceManagement.WebUI.Authorization;
-using Microsoft.EntityFrameworkCore;
-using WorkforceManagement.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using WorkforceManagement.DAL.Concrete;
-using WorkforceManagement.BLL.DataProvider;
+using System;
 using WorkforceManagement.BLL.Authentication;
-using AutoMapper;
-using System.Diagnostics;
-using WorkforceManagement.DTO.Models;
+using WorkforceManagement.BLL.DataProvider;
+using WorkforceManagement.BLL.Logic;
+using WorkforceManagement.DAL.Concrete;
 using WorkforceManagement.DAL.DataProvider;
+using WorkforceManagement.Domain.Entities;
+using WorkforceManagement.DTO.Models;
 
 namespace WorkforceManagement.WebUI
 {
@@ -74,8 +65,11 @@ namespace WorkforceManagement.WebUI
             services.AddScoped<IRepository<AuthData>, Repository<AuthData>>();
             services.AddScoped<IDataPresenter<AuthData>, DataPresenter<AuthData>>();
             services.AddScoped<IDataPresenter<Employee>, DataPresenter<Employee>>();
+            services.AddScoped<IMapLogic<Employee,EmployeeDto>, MapLogic<Employee,EmployeeDto>>();
+            services.AddScoped<IMapLogic<AuthData,AuthDataDto>, MapLogic<AuthData,AuthDataDto>>();
             services.AddScoped<IAuthenticationConfig, AuthenticationConfig>();
-            
+
+
             services.AddMvc();
             //AutoMapper.Mapper.Initialize(cfg =>
             //{
@@ -119,7 +113,10 @@ namespace WorkforceManagement.WebUI
 
             AutoMapper.Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Employee, EmployeeDto>().ForMember(x => x.Name, des => des.MapFrom(src => src.Name));
+                cfg.CreateMap<Employee, EmployeeDto>();
+                cfg.CreateMap<EmployeeDto, Employee>();
+                cfg.CreateMap<AuthDataDto, AuthData>();
+
                 
                 //cfg.CreateMap<IEnumerable<Employee>, IEnumerable<EmployeeDto>>();
                 //app.UseCookieAuthentication(new CookieAuthenticationOptions
