@@ -1,4 +1,4 @@
-@model WorkforceManagement.DTO.Models
+@model WorkforceManagement.DTO.Models.AuthDataDto
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,7 +8,9 @@
 <body>
     @using (Html.BeginForm("Login", "Account"))
     {
-        @ViewBag.ErrMsg
+        <br />
+        <p class="gly" style="color:darkred">@ViewBag.ErrMsg</p>
+        <br />
         <br />
         @Html.ValidationMessageFor(x=>x.Email)
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })

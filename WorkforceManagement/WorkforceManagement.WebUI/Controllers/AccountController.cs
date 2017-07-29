@@ -121,7 +121,7 @@ namespace WorkforceManagement.WebUI.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError(string.Empty, "invalid email or password");
+                ViewBag.ErrMsg = "invalid email or password";
                 return View("Login");
             }
 

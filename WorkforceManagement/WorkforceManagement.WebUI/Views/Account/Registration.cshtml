@@ -3,6 +3,13 @@
 @{
     ViewData["Title"] = "Registration";
 }
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-theme.css" />
+<link rel="stylesheet" href="~/lib/sweetalert/dist/sweetalert.css" />
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
 @using (Html.BeginForm("Registration", "Account",FormMethod.Post))
 {
     @Html.ValidationSummary();
@@ -28,6 +35,16 @@
         <option>IT Support Manager</option>
     </select>
     <br />
-    <button type="submit" style="margin-right:70px" class="btn btn-success" value="submit">Create</button>
+    <button id="btn" type="submit" style="margin-right:70px" class="btn btn-success " value="submit">Create</button>
 }
 
+<script>
+    $("button").click(function () {
+           swal("Good job!", "you have been successfully registered", "success")
+       })
+</script>
+
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
