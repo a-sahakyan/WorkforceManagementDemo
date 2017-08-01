@@ -13,7 +13,7 @@ namespace WorkforceManagement.BLL.Logic
         }
 
         public IEnumerable<TDestination> MapAll()
-        {
+        { 
             var model = AutoMapper.Mapper.Map<IEnumerable<TDestination>>(_entity.GetAll());
 
             return model;

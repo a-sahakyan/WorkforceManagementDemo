@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.Domain.Entities;
@@ -16,8 +15,6 @@ namespace WorkforceManagement.WebUI.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
-        //[AuthorizeConfig("Admin")]
         public IActionResult Index()
         {
             var employeeDto = _mapper.MapAll();
@@ -25,13 +22,6 @@ namespace WorkforceManagement.WebUI.Controllers
             ViewBag.IsAuthenticated = AuthenticationLogic.IsAuthenticated;
 
             return View(employeeDto);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult AuthPage()
-        {
-            return View();
         }
     }
 }

@@ -1,0 +1,6 @@
+F:\Github\WorkforceManagement\WorkforceManagement\WorkforceManagement.VM\bin\Debug\netstandard1.4\WorkforceManagement.VM.deps.json
+F:\Github\WorkforceManagement\WorkforceManagement\WorkforceManagement.VM\bin\Debug\netstandard1.4\WorkforceManagement.VM.dll
+F:\Github\WorkforceManagement\WorkforceManagement\WorkforceManagement.VM\bin\Debug\netstandard1.4\WorkforceManagement.VM.pdb
+F:\Github\WorkforceManagement\WorkforceManagement\WorkforceManagement.VM\obj\Debug\netstandard1.4\WorkforceManagement.VM.AssemblyInfo.cs
+F:\Github\WorkforceManagement\WorkforceManagement\WorkforceManagement.VM\obj\Debug\netstandard1.4\WorkforceManagement.VM.dll
+F:\Github\WorkforceManagement\WorkforceManagement\WorkforceManagement.VM\obj\Debug\netstandard1.4\WorkforceManagement.VM.pdb
