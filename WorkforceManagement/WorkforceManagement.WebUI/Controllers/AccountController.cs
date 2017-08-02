@@ -36,10 +36,11 @@ namespace WorkforceManagement.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
+                AuthenticationLogic.IsAuthenticated = true;
+                _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
                 _authentication.Register(employee, authData);
 
                 var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
-                
 
                 //AuthenticationLogic.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
 
@@ -63,10 +64,10 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpPost]
         public IActionResult Login(AuthData data)
         {
-           
+
 
             string role = _authentication.SignIn(data);
-           
+
 
             if (role == "admin")
             {
