@@ -1,11 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using System.Text;
+
+@{
+    byte[] b = new byte[] { };
+    var exist = Context.Session.TryGetValue("IsAuth", out b);
+    string value = Encoding.ASCII.GetString(b);
+    bool isAuthenticated = Convert.ToBoolean(value);
+
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WorkforceManagement.WebUI</title>
 
-    <environment names="Development" >
+    <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
@@ -17,6 +26,7 @@
     </environment>
 </head>
 <body>
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,14 +37,35 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav" >
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                @*@await Html.PartialAsync("_LoginPartial")*@
-            </div>
+            @if (isAuthenticated)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-area="" asp-controller="Account" asp-action="Registration">Register</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                    </ul>
+                    @*@await Html.PartialAsync("_LoginPartial")*@
+                </div>
+                Context.Session.Clear();
+            }
         </div>
     </div>
     <div class="container body-content">

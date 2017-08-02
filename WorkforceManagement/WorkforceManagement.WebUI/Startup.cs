@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,14 +49,15 @@ namespace WorkforceManagement.WebUI
 
             services.AddScoped<IRepository<Employee>, Repository<Employee>>();
             services.AddScoped<IRepository<AuthData>, Repository<AuthData>>();
-            services.AddScoped<IMapLogic<Employee,EmployeeDto>, MapLogic<Employee,EmployeeDto>>();
-            services.AddScoped<IMapLogic<AuthData,AuthDataDto>, MapLogic<AuthData,AuthDataDto>>();
+            services.AddScoped<IMapLogic<Employee, EmployeeDto>, MapLogic<Employee, EmployeeDto>>();
+            services.AddScoped<IMapLogic<AuthData, AuthDataDto>, MapLogic<AuthData, AuthDataDto>>();
             services.AddScoped<IMapLogic<Employee, UserDataViewModel>, MapLogic<Employee, UserDataViewModel>>();
             services.AddScoped<IMapLogic<AuthData, UserDataViewModel>, MapLogic<AuthData, UserDataViewModel>>();
             services.AddScoped<IAdminLogic, AdminLogic>();
             services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
-            
+
             services.AddMvc();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,19 +81,20 @@ namespace WorkforceManagement.WebUI
                 cfg.CreateMap<EmployeeDto, Employee>();
                 cfg.CreateMap<AuthDataDto, AuthData>();
                 cfg.CreateMap<Employee, UserDataViewModel>();
-                cfg.CreateMap<AuthData, UserDataViewModel>().ForMember(src=>src.Email ,dest=>dest.MapFrom(x=>x.Email));
+                cfg.CreateMap<AuthData, UserDataViewModel>().ForMember(src => src.Email, dest => dest.MapFrom(x => x.Email));
             });
 
-                app.UseStaticFiles();
+            app.UseStaticFiles();
+            app.UseSession();
 
-                app.UseMvc(routes =>
-                {
-                    routes.MapRoute(
-                        name: "default",
-                        template: "{controller=Home}/{action=Index}/{id?}");
-                });
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
-                DbInitalizer.Initalize(context);
-            }
+            DbInitalizer.Initalize(context);
+        }
     }
 }

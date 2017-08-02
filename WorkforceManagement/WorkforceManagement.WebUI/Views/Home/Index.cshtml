@@ -1,43 +1,21 @@
 @using WorkforceManagement.DTO.Models;
-
+@using System.Text;
 @model  IEnumerable<EmployeeDto>
+@{ 
+    byte[] b = new byte[] { };
+    var exist = Context.Session.TryGetValue("IsAuth", out b);
+    string value = Encoding.ASCII.GetString(b);
+    bool isAuthenticated = Convert.ToBoolean(value);
+}
+
 @{
     ViewData["Title"] = "Index";
 }
-<link rel="stylesheet" href="~/lib/bootstrap-calendar/css/calendar.css" />
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="~/lib/bootstrap-calendar/js/calendar.js"></script>
-<script src="~/lib/bootstrap-calendar/js/app.js"></script>
-@if (!ViewBag.IsAuthenticated)
+@if (isAuthenticated)
 {
-    <br />
-    using (Html.BeginForm("Login", "Account", FormMethod.Get))
-    {
-        <button type="submit" class="btn btn-primary">Login Now</button>
-    }
-    <br />
-    @using (Html.BeginForm("Registration", "Account",FormMethod.Get))
-    {
-        <button type="submit" class="btn btn-primary">Registration</button>
-    }
+    <p>you logged!!</p>
 }
 else
 {
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/lib/bootstrap-calendar/js/calendar.js"></script>
-    <script src="~/lib/bootstrap-calendar/js/app.js"></script>
-
-   @using (Html.BeginForm("Logout","Account"))
-   {
-        <button class="btn-warning">Logout</button>
-   }
-    <p>
-        you can visit the authorize page, @Html.ActionLink("Login now", "Login", "Account") AuthPage
-    </p>
+    <p>Please log In</p>
 }
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="~/lib/bootstrap-calendar/js/calendar.js"></script>
-<script src="~/lib/bootstrap-calendar/js/app.js"></script>

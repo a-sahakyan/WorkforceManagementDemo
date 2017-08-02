@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
+using System.Text;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
@@ -14,7 +16,7 @@ namespace WorkforceManagement.WebUI.Controllers
         IAdminLogic _admLogic;
 
         public AccountController(IAuthenticationLogic authentication, IMapLogic<Employee, EmployeeDto> employeeDtoMap,
-            IAdminLogic admLogic)
+            IAdminLogic admLogic, IHttpContextAccessor httpContextAccessor)
         {
             _employeeDtoMap = employeeDtoMap;
             _authentication = authentication;
@@ -24,6 +26,8 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Registration()
         {
+            AuthenticationLogic.IsAuthenticated = false;
+            _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
             return View();
         }
 
@@ -35,8 +39,9 @@ namespace WorkforceManagement.WebUI.Controllers
                 _authentication.Register(employee, authData);
 
                 var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
+                
 
-                AuthenticationLogic.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
+                //AuthenticationLogic.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -49,22 +54,32 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            AuthenticationLogic.IsAuthenticated = true;
+            _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
+
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(AuthData data)
         {
+           
+
             string role = _authentication.SignIn(data);
+           
 
             if (role == "admin")
             {
+                AuthenticationLogic.IsAuthenticated = true;
+                _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
                 return RedirectToAction("Admin");
             }
             else
             {
                 if (role == "user")
                 {
+                    AuthenticationLogic.IsAuthenticated = true;
+                    _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -75,6 +90,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
         public IActionResult Admin()
         {
+            _authentication.SetAuthentication(true);
             var data = _admLogic.GetAllUsersData();
 
             return View(data);
@@ -83,6 +99,8 @@ namespace WorkforceManagement.WebUI.Controllers
         public IActionResult Logout()
         {
             AuthenticationLogic.IsAuthenticated = false;
+            _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
+            //AuthenticationLogic.IsAuthenticated = false;
 
             return RedirectToAction("Index", "Home");
         }

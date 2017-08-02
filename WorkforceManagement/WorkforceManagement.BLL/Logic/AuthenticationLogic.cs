@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Http;
+using System.Linq;
 using WorkforceManagement.DAL.DataProvider;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
@@ -11,17 +12,29 @@ namespace WorkforceManagement.BLL.Logic
         private IMapLogic<AuthData, AuthDataDto> _mapperAuthData;
         private IRepository<Employee> _employee;
         private IRepository<AuthData> _authData;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
+
+        public static bool IsAuthenticated { get; set; }
 
         public AuthenticationLogic(IMapLogic<Employee, EmployeeDto> mapperEmployee, IMapLogic<AuthData, AuthDataDto> mapperAuthData,
-            IRepository<Employee> employee, IRepository<AuthData> authData)
+            IRepository<Employee> employee, IRepository<AuthData> authData,IHttpContextAccessor http)
         {
             _mapperEmployee = mapperEmployee;
             _mapperAuthData = mapperAuthData;
             _employee = employee;
             _authData = authData;
+            _httpContextAccessor = http;
         }
 
-        public static bool IsAuthenticated { get; set; }
+        public void SetAuthentication(bool isAuthenticated)
+        {
+            _session.Remove("IsAuth");
+            _session.Clear();
+            _session.SetString("IsAuth", isAuthenticated.ToString());
+        }
+
+        //public static bool IsAuthenticated { get; set; }
 
         public void Register(EmployeeDto employee, AuthDataDto authData)
         {
@@ -55,7 +68,7 @@ namespace WorkforceManagement.BLL.Logic
                 {
                     if (item.Email == authData.Email && item.Password == authData.Password)
                     {
-                        AuthenticationLogic.IsAuthenticated = true;
+                        //AuthenticationLogic.IsAuthenticated = true;
                         role = "user";
                         break;
                     }

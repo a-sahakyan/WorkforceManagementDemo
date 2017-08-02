@@ -8,5 +8,7 @@ namespace WorkforceManagement.BLL.Logic
         void Register(EmployeeDto employee, AuthDataDto authData);
 
         string SignIn(AuthData authData);
+
+        void SetAuthentication(bool isAuthenticated);
     }
 }
