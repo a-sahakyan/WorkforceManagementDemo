@@ -4,6 +4,25 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\bootstrap-calendar\**" />
+    <Compile Remove="wwwroot\lib\core-resizable\**" />
+    <Compile Remove="wwwroot\lib\flatpickr\**" />
+    <Compile Remove="wwwroot\lib\fullcalendar\**" />
+    <Content Remove="wwwroot\lib\bootstrap-calendar\**" />
+    <Content Remove="wwwroot\lib\core-resizable\**" />
+    <Content Remove="wwwroot\lib\flatpickr\**" />
+    <Content Remove="wwwroot\lib\fullcalendar\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap-calendar\**" />
+    <EmbeddedResource Remove="wwwroot\lib\core-resizable\**" />
+    <EmbeddedResource Remove="wwwroot\lib\flatpickr\**" />
+    <EmbeddedResource Remove="wwwroot\lib\fullcalendar\**" />
+    <None Remove="wwwroot\lib\bootstrap-calendar\**" />
+    <None Remove="wwwroot\lib\core-resizable\**" />
+    <None Remove="wwwroot\lib\flatpickr\**" />
+    <None Remove="wwwroot\lib\fullcalendar\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />

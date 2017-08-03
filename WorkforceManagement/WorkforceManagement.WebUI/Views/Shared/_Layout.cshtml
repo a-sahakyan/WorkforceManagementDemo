@@ -42,12 +42,12 @@
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a class="glyphicon glyphicon-home" asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home">Home</span></a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout"><span class="glyphicon glyphicon-log-out">Logut</span></a></li>
                     </ul>
                 </div>
             }
@@ -55,13 +55,14 @@
             {
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home">Home</span></a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a asp-area="" asp-controller="Account" asp-action="Registration">Register</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Registration"><span class="glyphicon glyphicon-user">Sign Up</span></a></li>
+                        <li>
+                        <a  asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in">Login</span></a></li>
                     </ul>
                     @*@await Html.PartialAsync("_LoginPartial")*@
                 </div>
@@ -73,7 +74,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; version 1.8.0</p>
+            <p>&copy; version 1.9.0</p>
         </footer>
     </div>
 

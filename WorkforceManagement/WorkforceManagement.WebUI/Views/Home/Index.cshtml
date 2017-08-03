@@ -1,4 +1,4 @@
-@using WorkforceManagement.DTO.Models;
+﻿@using WorkforceManagement.DTO.Models;
 @using System.Text;
 @model  IEnumerable<EmployeeDto>
 @{
@@ -15,8 +15,31 @@
 }
 @if (isAuthenticated)
 {
-    <p>you logged!!</p>
+    <link rel="stylesheet" href="~/lib/bootstrap-year-calendar/css/bootstrap-year-calendar.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <br />
+        <button class="btn">Show Calendar</button>
+        <br />
+        <div class="calender-div" data-provide="calendar" style="display:none"></div>
 
+        <script>
+            $(".btn").click(function () {
+                var lable = $(".btn").text().trim();
+
+                if (lable == "Hide Calendar") {
+                    $(".btn").text("Show Calendar");
+                    $(".calender-div").hide();
+                }
+                else {
+                    $(".btn").text("Hide Calendar");
+                    $(".calender-div").show();
+                }
+            });
+        </script>
+
+        <script src="~/lib/bootstrap-year-calendar/js/bootstrap-year-calendar.js"></script>
 }
 else
 {
@@ -40,10 +63,10 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                      <td>admin@gmail.com</td>
-                      <td>8888</td>
-                  </tr>
+                    <tr>
+                        <td>admin@gmail.com</td>
+                        <td>8888</td>
+                    </tr>
                     <tr>
                         <td>user@gmail.com</td>
                         <td>1111</td>
