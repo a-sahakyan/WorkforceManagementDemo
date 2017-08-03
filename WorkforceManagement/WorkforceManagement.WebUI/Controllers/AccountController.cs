@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
-using System.Text;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
@@ -42,7 +41,7 @@ namespace WorkforceManagement.WebUI.Controllers
 
                 //AuthenticationLogic.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Admin", "Account");
             }
             else
             {

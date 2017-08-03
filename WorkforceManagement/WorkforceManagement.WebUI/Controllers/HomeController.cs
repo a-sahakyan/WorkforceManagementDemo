@@ -9,16 +9,12 @@ namespace WorkforceManagement.WebUI.Controllers
     public class HomeController : Controller
     {
         IMapLogic<Employee, EmployeeDto> _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private ISession _session => _httpContextAccessor.HttpContext.Session;
         private IAuthenticationLogic _auth;
 
         public HomeController(IMapLogic<Employee, EmployeeDto> mapper, IHttpContextAccessor httpContextAccessor,IAuthenticationLogic auth)
         {
-            _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
             _auth = auth;
-
         }
 
         [HttpGet]
