@@ -55,7 +55,7 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            AuthenticationLogic.IsAuthenticated = true;
+            AuthenticationLogic.IsAuthenticated = false;
             _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
 
             return View();
