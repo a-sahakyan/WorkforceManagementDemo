@@ -1,10 +1,12 @@
 @using WorkforceManagement.DTO.Models;
 @using System.Text;
 @model  IEnumerable<EmployeeDto>
-@{ 
+@{
+    string value = "false";
     byte[] b = new byte[] { };
     var exist = Context.Session.TryGetValue("IsAuth", out b);
-    string value = Encoding.ASCII.GetString(b);
+    value = b != null ? Encoding.ASCII.GetString(b) : value;
+
     bool isAuthenticated = Convert.ToBoolean(value);
 }
 
@@ -14,8 +16,41 @@
 @if (isAuthenticated)
 {
     <p>you logged!!</p>
+
 }
 else
 {
-    <p>Please log In</p>
+    <h2>Please log in</h2>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/js/bootstrap.js">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Users</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>email</th>
+                        <th>password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                      <td>admin@gmail.com</td>
+                      <td>8888</td>
+                  </tr>
+                    <tr>
+                        <td>user@gmail.com</td>
+                        <td>1111</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
 }

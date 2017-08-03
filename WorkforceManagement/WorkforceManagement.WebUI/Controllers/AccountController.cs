@@ -26,8 +26,6 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Registration()
         {
-            AuthenticationLogic.IsAuthenticated = false;
-            _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
             return View();
         }
 
@@ -55,9 +53,6 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            AuthenticationLogic.IsAuthenticated = false;
-            _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
-
             return View();
         }
 

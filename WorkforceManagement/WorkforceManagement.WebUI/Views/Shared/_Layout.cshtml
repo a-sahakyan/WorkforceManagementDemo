@@ -1,11 +1,12 @@
 ﻿@using System.Text;
 
 @{
+    string value = "false";
     byte[] b = new byte[] { };
     var exist = Context.Session.TryGetValue("IsAuth", out b);
-    string value = Encoding.ASCII.GetString(b);
-    bool isAuthenticated = Convert.ToBoolean(value);
+    value = b != null ? Encoding.ASCII.GetString(b) : value;
 
+    bool isAuthenticated = Convert.ToBoolean(value);
 }
 <!DOCTYPE html>
 <html>
@@ -72,7 +73,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; version 1.7.2</p>
+            <p>&copy; version 1.8.0</p>
         </footer>
     </div>
 

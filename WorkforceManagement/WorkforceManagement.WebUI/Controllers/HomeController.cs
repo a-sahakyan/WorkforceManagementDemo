@@ -18,6 +18,7 @@ namespace WorkforceManagement.WebUI.Controllers
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
             _auth = auth;
+
         }
 
         [HttpGet]
