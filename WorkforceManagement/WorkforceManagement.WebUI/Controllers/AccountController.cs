@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Security.Claims;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
@@ -37,10 +36,6 @@ namespace WorkforceManagement.WebUI.Controllers
                 _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
                 _authentication.Register(employee, authData);
 
-                var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity("Cookie"));
-
-                //AuthenticationLogic.IsAuthenticated = userPrincipal.Identity.IsAuthenticated;
-
                 return RedirectToAction("Admin", "Account");
             }
             else
@@ -58,10 +53,7 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpPost]
         public IActionResult Login(AuthData data)
         {
-
-
             string role = _authentication.SignIn(data);
-
 
             if (role == "admin")
             {
@@ -95,7 +87,6 @@ namespace WorkforceManagement.WebUI.Controllers
         {
             AuthenticationLogic.IsAuthenticated = false;
             _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
-            //AuthenticationLogic.IsAuthenticated = false;
 
             return RedirectToAction("Index", "Home");
         }

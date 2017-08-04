@@ -29,26 +29,19 @@ namespace WorkforceManagement.BLL.Logic
 
         public void SetAuthentication(bool isAuthenticated)
         {
-            _session.Remove("IsAuth");
-            _session.Clear();
             _session.SetString("IsAuth", isAuthenticated.ToString());
         }
-
-        //public static bool IsAuthenticated { get; set; }
 
         public void Register(EmployeeDto employee, AuthDataDto authData)
         {
             var newEmployee = _mapperEmployee.Map(employee);
-
             _employee.Insert(newEmployee);
 
             int id = _employee.GetAll().Select(x => x.EmployeeId).Last();
             authData.Roles = "User";
             authData.EmployeeId = id;
 
-
             var newAuthData = _mapperAuthData.Map(authData);
-
             _authData.Insert(newAuthData);
         }
 
@@ -68,7 +61,6 @@ namespace WorkforceManagement.BLL.Logic
                 {
                     if (item.Email == authData.Email && item.Password == authData.Password)
                     {
-                        //AuthenticationLogic.IsAuthenticated = true;
                         role = "user";
                         break;
                     }

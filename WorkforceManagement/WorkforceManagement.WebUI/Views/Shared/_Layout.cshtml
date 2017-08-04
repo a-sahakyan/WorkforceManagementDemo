@@ -4,7 +4,6 @@
     byte[] b = new byte[] { };
     var exist = Context.Session.TryGetValue("IsAuth", out b);
     value = b != null ? Encoding.ASCII.GetString(b) : value;
-
     bool isAuthenticated = Convert.ToBoolean(value);
 }
 <!DOCTYPE html>
@@ -64,7 +63,6 @@
                     </ul>
                     @*@await Html.PartialAsync("_LoginPartial")*@
                 </div>
-                Context.Session.Clear();
             }
         </div>
     </div>
@@ -72,7 +70,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; version 1.9.5</p>
+            <p>&copy; version 1.9.6</p>
         </footer>
     </div>
     <environment names="Development">

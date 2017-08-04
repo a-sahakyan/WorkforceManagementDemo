@@ -54,7 +54,6 @@ namespace WorkforceManagement.WebUI
             services.AddScoped<IMapLogic<AuthData, UserDataViewModel>, MapLogic<AuthData, UserDataViewModel>>();
             services.AddScoped<IAdminLogic, AdminLogic>();
             services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
-
             services.AddMvc();
             services.AddSession();
         }
