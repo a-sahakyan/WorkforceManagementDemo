@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Content Include="wwwroot\js\calendar.js" />
+    <Content Include="wwwroot\js\data.json" />
     <Content Include="wwwroot\js\progressbar.js" />
   </ItemGroup>
   <ItemGroup>
