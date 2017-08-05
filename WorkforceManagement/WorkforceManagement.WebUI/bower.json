@@ -4,7 +4,9 @@
   "dependencies": {
     "bootstrap": "v3.3.6",
     "jQuery": "3.2.1",
-    "bootstrap-year-calendar": "v1.1.0"
+    "bootstrap-year-calendar": "v1.1.0",
+    "jquery-ajax-unobtrusive": "v3.2.4",
+    "sweetalert": "v1.1.3"
   },
   "resolutions": {
     "bootstrap": "v3.3.6"
