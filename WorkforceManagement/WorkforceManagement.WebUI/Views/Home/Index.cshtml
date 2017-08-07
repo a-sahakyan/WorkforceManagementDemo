@@ -35,10 +35,8 @@
 
             @foreach (var m in Model)
             {
-
                 if (ViewBag.CurrentUser == m.EmployeeId)
                 {
-                    
                     for (int i = 0; i < m.SkillKnowledge.Length; i++)
                     {
                         if (m.SkillKnowledge[i] == '%')
@@ -92,32 +90,34 @@
     $("#save-btn").click(function () {
         $.getJSON("../js/data.json", function (data) {
             for (var i = 0; i < data.Count; i++) {
-                console.log("start")
-                var percent = $("#sr-only" + i + "").text();
-                console.log(percent)
-                var skill = $("#l" + i + "").text();
-                var items = {
-                    SkillName: "" + skill + "", SkillKnowledge: "" + percent + ""
-                };
-                console.log(items);
-                var data = JSON.stringify(items);
+                (function (counter) {
+                    console.log("start")
+                    var percent = $("#sr-only" + i + "").text();
+                    console.log(percent)
+                    var skill = $("#l" + i + "").text();
+                    var items = {
+                        SkillName: "" + skill + "", SkillKnowledge: "" + percent + ""
+                    };
+                    console.log(items);
+                    var data = JSON.stringify(items);
 
-                $.ajax({
-                    url: "/Home/Index",
-                    type: "POST",
-                    data: data,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    error: function (response) {
-                        alert(response.responseText);
-                        alert("err")
-                    },
-                    success: function (response) {
-                        alert(response);
-                        console.log("success")
-                        alert("success")
-                    }
-                });
+                    $.ajax({
+                        url: "/Home/Index",
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        error: function (response) {
+                            alert(response.responseText);
+                            alert("err")
+                        },
+                        success: function (response) {
+                            alert(response);
+                            console.log("success")
+                            alert("success")
+                        }
+                    });
+                })(i);
             }
         })
     });

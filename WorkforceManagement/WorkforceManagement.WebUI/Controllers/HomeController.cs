@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using WorkforceManagement.BLL.Logic;
+using WorkforceManagement.DAL.DataProvider;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.DTO.Models;
 
@@ -16,8 +17,8 @@ namespace WorkforceManagement.WebUI.Controllers
         private IAuthenticationLogic _auth;
         private ISkillLogic _skill;
 
-        public HomeController(IMapLogic<Employee, EmployeeDto> mapperEmployee, IAuthenticationLogic auth,ISkillLogic skill,
-            IMapLogic<Skill,SkillDto> mapperSkill)
+        public HomeController(IMapLogic<Employee, EmployeeDto> mapperEmployee, IAuthenticationLogic auth, ISkillLogic skill,
+            IMapLogic<Skill, SkillDto> mapperSkill)
         {
             _mapperEmployee = mapperEmployee;
             _mapperSkill = mapperSkill;
@@ -34,6 +35,12 @@ namespace WorkforceManagement.WebUI.Controllers
             ViewBag.CurrentUser = AuthenticationLogic.CurrentUserId;
             _auth.SetAuthentication(AuthenticationLogic.IsAuthenticated);
 
+            var content = DataAccess.LoadData("data");
+            var data = JsonConvert.DeserializeObject<SkillConfig>(content);
+            data.Count = "0";
+            string json = JsonConvert.SerializeObject(data);
+            DataAccess.WriteData("data", json);
+
             return View(skillDto);
         }
 
@@ -47,16 +54,10 @@ namespace WorkforceManagement.WebUI.Controllers
 
         public IActionResult JsonConfig([FromBody]SkillConfig data)
         {
-            string path = @"wwwroot\js\data.json";
             string json = JsonConvert.SerializeObject(data);
-            using (FileStream fs = new FileStream(path, FileMode.Truncate))
-            using (StreamWriter sr = new StreamWriter(fs))
-            {
-                sr.Write(json);
-            }
+            DataAccess.WriteData("data", json);
 
             return Json(data);
         }
     }
-
 }
