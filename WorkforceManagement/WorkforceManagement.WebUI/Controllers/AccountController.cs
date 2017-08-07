@@ -36,7 +36,7 @@ namespace WorkforceManagement.WebUI.Controllers
                 _authentication.SetAuthentication(AuthenticationLogic.IsAuthenticated);
                 _authentication.Register(employee, authData);
 
-                return RedirectToAction("Admin", "Account");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
