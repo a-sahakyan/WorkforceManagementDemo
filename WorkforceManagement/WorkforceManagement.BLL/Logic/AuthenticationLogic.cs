@@ -40,10 +40,13 @@ namespace WorkforceManagement.BLL.Logic
             int id = _employee.GetAll().Select(x => x.EmployeeId).Last();
             authData.Roles = "User";
             authData.EmployeeId = id;
+            CurrentUserId = id;
 
             var newAuthData = _mapperAuthData.Map(authData);
             _authData.Insert(newAuthData);
         }
+
+        public static int CurrentUserId { get; set; }
 
         public string SignIn(AuthData authData)
         {
@@ -53,6 +56,7 @@ namespace WorkforceManagement.BLL.Logic
 
             if (authData.Email == adminEmail && authData.Password == adminPass)
             {
+                CurrentUserId = _authData.GetAll().Select(x=>x.EmployeeId).First();
                 role = "admin";
             }
             else
@@ -61,6 +65,7 @@ namespace WorkforceManagement.BLL.Logic
                 {
                     if (item.Email == authData.Email && item.Password == authData.Password)
                     {
+                        CurrentUserId = item.EmployeeId;
                         role = "user";
                         break;
                     }

@@ -14,7 +14,7 @@ namespace WorkforceManagement.WebUI.Controllers
         IAdminLogic _admLogic;
 
         public AccountController(IAuthenticationLogic authentication, IMapLogic<Employee, EmployeeDto> employeeDtoMap,
-            IAdminLogic admLogic, IHttpContextAccessor httpContextAccessor)
+            IAdminLogic admLogic)
         {
             _employeeDtoMap = employeeDtoMap;
             _authentication = authentication;

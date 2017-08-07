@@ -11,37 +11,45 @@ namespace WorkforceManagement.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        IMapLogic<Employee, EmployeeDto> _mapper;
+        private IMapLogic<Employee, EmployeeDto> _mapperEmployee;
+        private IMapLogic<Skill, SkillDto> _mapperSkill;
         private IAuthenticationLogic _auth;
+        private ISkillLogic _skill;
 
-        public HomeController(IMapLogic<Employee, EmployeeDto> mapper, IHttpContextAccessor httpContextAccessor, IAuthenticationLogic auth)
+        public HomeController(IMapLogic<Employee, EmployeeDto> mapperEmployee, IAuthenticationLogic auth,ISkillLogic skill,
+            IMapLogic<Skill,SkillDto> mapperSkill)
         {
-            _mapper = mapper;
+            _mapperEmployee = mapperEmployee;
+            _mapperSkill = mapperSkill;
             _auth = auth;
+            _skill = skill;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var employeeDto = _mapper.MapAll();
+            var employeeDto = _mapperEmployee.MapAll();
+            var skillDto = _mapperSkill.MapAll();
             ViewBag.IsAuthenticated = AuthenticationLogic.IsAuthenticated;
+            ViewBag.CurrentUser = AuthenticationLogic.CurrentUserId;
             _auth.SetAuthentication(AuthenticationLogic.IsAuthenticated);
 
-            return View(employeeDto);
+            return View(skillDto);
         }
 
+        [HttpPost]
         public IActionResult Index([FromBody]SkillDto datas)
         {
-            int a = 24;
+            _skill.SaveSkills(datas);
 
             return Json(datas);
         }
 
-        public IActionResult JsonConfig([FromBody]CountDto data)
+        public IActionResult JsonConfig([FromBody]SkillConfig data)
         {
             string path = @"wwwroot\js\data.json";
             string json = JsonConvert.SerializeObject(data);
-            using (FileStream fs = new FileStream(path,FileMode.Truncate))
+            using (FileStream fs = new FileStream(path, FileMode.Truncate))
             using (StreamWriter sr = new StreamWriter(fs))
             {
                 sr.Write(json);
@@ -49,11 +57,6 @@ namespace WorkforceManagement.WebUI.Controllers
 
             return Json(data);
         }
-
     }
 
-    public class CountDto
-    {
-        public string Count { get; set; }
-    }
 }

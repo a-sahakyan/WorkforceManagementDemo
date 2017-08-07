@@ -48,11 +48,14 @@ namespace WorkforceManagement.WebUI
 
             services.AddScoped<IRepository<Employee>, Repository<Employee>>();
             services.AddScoped<IRepository<AuthData>, Repository<AuthData>>();
+            services.AddScoped<IRepository<Skill>, Repository<Skill>>();
             services.AddScoped<IMapLogic<Employee, EmployeeDto>, MapLogic<Employee, EmployeeDto>>();
             services.AddScoped<IMapLogic<AuthData, AuthDataDto>, MapLogic<AuthData, AuthDataDto>>();
             services.AddScoped<IMapLogic<Employee, UserDataViewModel>, MapLogic<Employee, UserDataViewModel>>();
             services.AddScoped<IMapLogic<AuthData, UserDataViewModel>, MapLogic<AuthData, UserDataViewModel>>();
+            services.AddScoped<IMapLogic<Skill, SkillDto>, MapLogic<Skill, SkillDto>>();
             services.AddScoped<IAdminLogic, AdminLogic>();
+            services.AddScoped<ISkillLogic, SkillLogic>();
             services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
             services.AddMvc();
             services.AddSession();
@@ -78,6 +81,8 @@ namespace WorkforceManagement.WebUI
                 cfg.CreateMap<Employee, EmployeeDto>();
                 cfg.CreateMap<EmployeeDto, Employee>();
                 cfg.CreateMap<AuthDataDto, AuthData>();
+                cfg.CreateMap<Skill, SkillDto>();
+                cfg.CreateMap<SkillDto, Skill>();
                 cfg.CreateMap<Employee, UserDataViewModel>();
                 cfg.CreateMap<AuthData, UserDataViewModel>().ForMember(src => src.Email, dest => dest.MapFrom(x => x.Email));
             });
