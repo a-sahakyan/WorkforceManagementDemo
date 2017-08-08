@@ -50,6 +50,7 @@
                     <script>
                         $('#bar').append("<div><label  class='label label-default' style='margin:10px'>@m.SkillName</label><button style='margin:10px' data-toggle='progressbar' data-target='#@m.SkillId@m.EmployeeId'  data-value='0' class='btn btn-danger'>don't know</button><button style='margin:10px' data-toggle='progressbar' data-target='#@m.SkillId@m.EmployeeId' data-value='25' class='btn btn-warning'>basic</button><button style='margin:10px' data-toggle='progressbar' data-target='#@m.SkillId@m.EmployeeId' data-value='50' class='btn btn-info'>normal</button><button style='margin:10px' data-toggle='progressbar' data-target='#@m.SkillId@m.EmployeeId' data-value='75' class='btn btn-primary'>good</button><button data-toggle='progressbar' data-target='#@m.SkillId@m.EmployeeId' data-value='100' class='btn btn-success'>complete</button></div><div id='@m.SkillId@m.EmployeeId' class='progress'><div class='progress-bar' role='progressbar' aria-valuenow='@percent' aria-valuemin='0' aria-valuemax='100' style='width: @percent%;'><span id='sr-only' class='sr-only'>@m.SkillKnowledge</span></div></div></div>");
                     </script>
+                    percent = "";
                 }
             }
 
@@ -58,7 +59,7 @@
         value = document.getElementById("skill").value;
 
         if (value == "") {
-            alert("Please a dd skill");
+            alert("Please add skill");
         }
         else {
             $.getJSON("../js/data.json", function (data) {
