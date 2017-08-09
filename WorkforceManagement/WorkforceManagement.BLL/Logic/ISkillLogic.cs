@@ -7,6 +7,6 @@ namespace WorkforceManagement.BLL.Logic
 {
     public interface ISkillLogic
     {
-        void SaveSkills(SkillDto datas);
+        void SaveSkills(SkillDdd datas);
     }
 }

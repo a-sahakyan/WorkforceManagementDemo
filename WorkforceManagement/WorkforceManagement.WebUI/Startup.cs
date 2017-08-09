@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,11 +50,11 @@ namespace WorkforceManagement.WebUI
             services.AddScoped<IRepository<Employee>, Repository<Employee>>();
             services.AddScoped<IRepository<AuthData>, Repository<AuthData>>();
             services.AddScoped<IRepository<Skill>, Repository<Skill>>();
-            services.AddScoped<IMapLogic<Employee, EmployeeDto>, MapLogic<Employee, EmployeeDto>>();
-            services.AddScoped<IMapLogic<AuthData, AuthDataDto>, MapLogic<AuthData, AuthDataDto>>();
+            services.AddScoped<IMapLogic<Employee, EmployeeDdd>, MapLogic<Employee, EmployeeDdd>>();
+            services.AddScoped<IMapLogic<AuthData, AuthDataDdd>, MapLogic<AuthData, AuthDataDdd>>();
             services.AddScoped<IMapLogic<Employee, UserDataViewModel>, MapLogic<Employee, UserDataViewModel>>();
             services.AddScoped<IMapLogic<AuthData, UserDataViewModel>, MapLogic<AuthData, UserDataViewModel>>();
-            services.AddScoped<IMapLogic<Skill, SkillDto>, MapLogic<Skill, SkillDto>>();
+            services.AddScoped<IMapLogic<Skill, SkillDdd>, MapLogic<Skill, SkillDdd>>();
             services.AddScoped<IAdminLogic, AdminLogic>();
             services.AddScoped<ISkillLogic, SkillLogic>();
             services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
@@ -73,16 +74,23 @@ namespace WorkforceManagement.WebUI
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async contextBuilder =>
+                    {
+                        contextBuilder.Response.StatusCode = 500;
+                        await contextBuilder.Response.WriteAsync("An unexpected fault happend. Try again later.");
+                    });
+                });
             }
 
             AutoMapper.Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Employee, EmployeeDto>();
-                cfg.CreateMap<EmployeeDto, Employee>();
-                cfg.CreateMap<AuthDataDto, AuthData>();
-                cfg.CreateMap<Skill, SkillDto>();
-                cfg.CreateMap<SkillDto, Skill>();
+                cfg.CreateMap<Employee, EmployeeDdd>();
+                cfg.CreateMap<EmployeeDdd, Employee>();
+                cfg.CreateMap<AuthDataDdd, AuthData>();
+                cfg.CreateMap<Skill, SkillDdd>();
+                cfg.CreateMap<SkillDdd, Skill>();
                 cfg.CreateMap<Employee, UserDataViewModel>();
                 cfg.CreateMap<AuthData, UserDataViewModel>().ForMember(src => src.Email, dest => dest.MapFrom(x => x.Email));
             });

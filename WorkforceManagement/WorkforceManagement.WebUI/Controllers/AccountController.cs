@@ -9,11 +9,11 @@ namespace WorkforceManagement.WebUI.Controllers
 {
     public class AccountController : Controller, IDisposable
     {
-        IMapLogic<Employee, EmployeeDto> _employeeDtoMap;
+        IMapLogic<Employee, EmployeeDdd> _employeeDtoMap;
         IAuthenticationLogic _authentication;
         IAdminLogic _admLogic;
 
-        public AccountController(IAuthenticationLogic authentication, IMapLogic<Employee, EmployeeDto> employeeDtoMap,
+        public AccountController(IAuthenticationLogic authentication, IMapLogic<Employee, EmployeeDdd> employeeDtoMap,
             IAdminLogic admLogic)
         {
             _employeeDtoMap = employeeDtoMap;
@@ -28,7 +28,7 @@ namespace WorkforceManagement.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(EmployeeDto employee, AuthDataDto authData)
+        public IActionResult Registration(EmployeeDdd employee, AuthDataDdd authData)
         {
             if (ModelState.IsValid)
             {

@@ -8,8 +8,8 @@ namespace WorkforceManagement.BLL.Logic
 {
     public class AuthenticationLogic : IAuthenticationLogic
     {
-        private IMapLogic<Employee, EmployeeDto> _mapperEmployee;
-        private IMapLogic<AuthData, AuthDataDto> _mapperAuthData;
+        private IMapLogic<Employee, EmployeeDdd> _mapperEmployee;
+        private IMapLogic<AuthData, AuthDataDdd> _mapperAuthData;
         private IRepository<Employee> _employee;
         private IRepository<AuthData> _authData;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -17,7 +17,7 @@ namespace WorkforceManagement.BLL.Logic
 
         public static bool IsAuthenticated { get; set; }
 
-        public AuthenticationLogic(IMapLogic<Employee, EmployeeDto> mapperEmployee, IMapLogic<AuthData, AuthDataDto> mapperAuthData,
+        public AuthenticationLogic(IMapLogic<Employee, EmployeeDdd> mapperEmployee, IMapLogic<AuthData, AuthDataDdd> mapperAuthData,
             IRepository<Employee> employee, IRepository<AuthData> authData,IHttpContextAccessor http)
         {
             _mapperEmployee = mapperEmployee;
@@ -32,7 +32,7 @@ namespace WorkforceManagement.BLL.Logic
             _session.SetString("IsAuth", isAuthenticated.ToString());
         }
 
-        public void Register(EmployeeDto employee, AuthDataDto authData)
+        public void Register(EmployeeDdd employee, AuthDataDdd authData)
         {
             var newEmployee = _mapperEmployee.Map(employee);
             _employee.Insert(newEmployee);

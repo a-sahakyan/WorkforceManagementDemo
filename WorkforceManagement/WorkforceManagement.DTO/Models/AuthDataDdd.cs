@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WorkforceManagement.DTO.Models
 {
-    public class AuthDataDto
+    public class AuthDataDdd
     {
         public int EmployeeId { get; set; }
 

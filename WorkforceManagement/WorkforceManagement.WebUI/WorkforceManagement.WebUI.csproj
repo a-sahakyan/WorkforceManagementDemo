@@ -28,6 +28,7 @@
     <Content Include="wwwroot\js\calendar.js" />
     <Content Include="wwwroot\js\data.json" />
     <Content Include="wwwroot\js\progressbar.js" />
+    <Content Include="wwwroot\js\request.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />
@@ -54,6 +55,6 @@
 <ItemGroup>
   <ProjectReference Include="..\WorkforceManagement.BLL\WorkforceManagement.BLL.csproj" />
   <ProjectReference Include="..\WorkforceManagement.Domain\WorkforceManagement.Domain.csproj" />
-  <ProjectReference Include="..\WorkforceManagement.DTO\WorkforceManagement.DTO.csproj" />
+  <ProjectReference Include="..\WorkforceManagement.DTO\WorkforceManagement.DDD.csproj" />
 </ItemGroup>
 </Project>

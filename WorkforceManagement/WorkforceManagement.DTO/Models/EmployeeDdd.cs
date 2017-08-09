@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WorkforceManagement.DTO.Models
 {
-    public class EmployeeDto
+    public class EmployeeDdd
     {
         public int EmployeeId { get; set; }
 

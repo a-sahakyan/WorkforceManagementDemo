@@ -5,7 +5,7 @@ namespace WorkforceManagement.BLL.Logic
 {
     public interface IAuthenticationLogic
     {
-        void Register(EmployeeDto employee, AuthDataDto authData);
+        void Register(EmployeeDdd employee, AuthDataDdd authData);
 
         string SignIn(AuthData authData);
 

@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkforceManagement.DAL", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkforceManagement.BLL", "WorkforceManagement.BLL\WorkforceManagement.BLL.csproj", "{5547C7D9-8149-45E4-90CA-1E663A169C5F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkforceManagement.DTO", "WorkforceManagement.DTO\WorkforceManagement.DTO.csproj", "{B08B5F64-02C3-402E-BB8B-D7E22F83425D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkforceManagement.DDD", "WorkforceManagement.DTO\WorkforceManagement.DDD.csproj", "{B08B5F64-02C3-402E-BB8B-D7E22F83425D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkforceManagement.VM", "WorkforceManagement.VM\WorkforceManagement.VM.csproj", "{7A91AE93-F6A2-4058-88C9-25AFE1613831}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkforceManagement.VM", "WorkforceManagement.VM\WorkforceManagement.VM.csproj", "{7A91AE93-F6A2-4058-88C9-25AFE1613831}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

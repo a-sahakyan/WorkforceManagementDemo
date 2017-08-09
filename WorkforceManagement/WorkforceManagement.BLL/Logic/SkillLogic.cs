@@ -10,15 +10,15 @@ namespace WorkforceManagement.BLL.Logic
     public class SkillLogic : ISkillLogic
     {
         IRepository<Skill> _skill;
-        IMapLogic<Skill,SkillDto> _mapperSkill;
+        IMapLogic<Skill,SkillDdd> _mapperSkill;
 
-        public SkillLogic(IRepository<Skill> skill,IMapLogic<Skill,SkillDto> mapperSkill)
+        public SkillLogic(IRepository<Skill> skill,IMapLogic<Skill,SkillDdd> mapperSkill)
         {
             _skill = skill;
             _mapperSkill = mapperSkill;
         }
 
-        public void SaveSkills(SkillDto datas)
+        public void SaveSkills(SkillDdd datas)
         {
             datas.EmployeeId = AuthenticationLogic.CurrentUserId;
             var map = _mapperSkill.Map(datas);

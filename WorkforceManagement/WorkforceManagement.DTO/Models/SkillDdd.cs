@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorkforceManagement.DTO.Models
 {
-    public class SkillDto
+    public class SkillDdd
     {
         public int SkillId { get; set; }
 

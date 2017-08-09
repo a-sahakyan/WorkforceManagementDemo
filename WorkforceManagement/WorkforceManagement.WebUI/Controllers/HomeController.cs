@@ -12,13 +12,13 @@ namespace WorkforceManagement.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private IMapLogic<Employee, EmployeeDto> _mapperEmployee;
-        private IMapLogic<Skill, SkillDto> _mapperSkill;
+        private IMapLogic<Employee, EmployeeDdd> _mapperEmployee;
+        private IMapLogic<Skill, SkillDdd> _mapperSkill;
         private IAuthenticationLogic _auth;
         private ISkillLogic _skill;
 
-        public HomeController(IMapLogic<Employee, EmployeeDto> mapperEmployee, IAuthenticationLogic auth, ISkillLogic skill,
-            IMapLogic<Skill, SkillDto> mapperSkill)
+        public HomeController(IMapLogic<Employee, EmployeeDdd> mapperEmployee, IAuthenticationLogic auth, ISkillLogic skill,
+            IMapLogic<Skill, SkillDdd> mapperSkill)
         {
             _mapperEmployee = mapperEmployee;
             _mapperSkill = mapperSkill;
@@ -45,7 +45,7 @@ namespace WorkforceManagement.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody]SkillDto datas)
+        public IActionResult Index([FromBody]SkillDdd datas)
         {
             _skill.SaveSkills(datas);
 
