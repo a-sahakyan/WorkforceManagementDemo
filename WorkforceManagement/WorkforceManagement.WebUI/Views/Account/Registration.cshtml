@@ -1,30 +1,30 @@
-@model WorkforceManagement.VM.ViewModels.EmployeeViewModel
+@model WorkforceManagement.VM.ViewModels.UserDataViewModel
 
 @{
     ViewData["Title"] = "Registration";
 }
 
-@using (Html.BeginForm("Registration", "Account",FormMethod.Post))
+@using (Html.BeginForm("Registration", "Account", FormMethod.Post))
 {
     @Html.ValidationSummary();
     <br />
-    <input type="text" placeholder="Email" class="form-control" name="email" size="30" />
+    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email", type = "email", name = "email", size = "30" })
     <br />
-    <input  type="password" placeholder="Password" class="form-control" name="password"  size="30" />
+    @Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = "Password", type = "password", name = "password", size = "30" })
     <br />
-    <input type="password" placeholder="Confirm password" class="form-control" name="ConfirmPassword" size="30"/>
+    @Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Password", type = "password", name = "ConfirmPassword", size = "30" })
     <br />
-    <input type="text" placeholder="Name" class="form-control" name="name"  size="30" />
+    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", name = "name", placeholder="Name", type="text",size = "30" })
     <br />
-    <input type="text" placeholder="Last Name" class="form-control" name="lastname"  size="30" />
+    @Html.TextBoxFor(x=>x.LastName,new { @class="form-control",name="lastname", type="text",placeholder="Last Name",size="30"})
     <br />
-    <label title="Birth">Birth:</label>
+    @Html.LabelFor(x=>x.Birth)
     <br />
-    <input type="date" placeholder="Birth" class="form-control" name="Birth"  size="30" />
+    @Html.TextBoxFor(x=>x.Birth,new { @class="form-control",name="Birth",size="30",type="date",placeholder="Birth"})
     <br />
-    <label title="Profession">Profession:</label>
+    @Html.LabelFor(x=>x.Profession)
     <br />
-    <select name="Profession"  class="form-control">
+    <select name="Profession" class="form-control">
         <option selected="selected">Programmer</option>
         <option>HR manager</option>
         <option>IT systems administrator</option>
