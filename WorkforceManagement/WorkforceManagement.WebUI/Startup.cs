@@ -9,8 +9,8 @@ using System;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.DAL.Concrete;
 using WorkforceManagement.DAL.DataProvider;
+using WorkforceManagement.DDD.Models;
 using WorkforceManagement.Domain.Entities;
-using WorkforceManagement.DTO.Models;
 using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.WebUI
@@ -55,6 +55,9 @@ namespace WorkforceManagement.WebUI
             services.AddScoped<IMapLogic<Employee, UserDataViewModel>, MapLogic<Employee, UserDataViewModel>>();
             services.AddScoped<IMapLogic<AuthData, UserDataViewModel>, MapLogic<AuthData, UserDataViewModel>>();
             services.AddScoped<IMapLogic<Skill, SkillDdd>, MapLogic<Skill, SkillDdd>>();
+            services.AddScoped<IMapLogic<Skill, SkillViewModel>, MapLogic<Skill, SkillViewModel>>();
+            services.AddScoped<IMapLogic<Employee, EmployeeViewModel>, MapLogic<Employee, EmployeeViewModel>>();
+            services.AddScoped<IMapLogic<AuthData, AuthDataViewModel>, MapLogic<AuthData, AuthDataViewModel>>();
             services.AddScoped<IAdminLogic, AdminLogic>();
             services.AddScoped<ISkillLogic, SkillLogic>();
             services.AddScoped<IAuthenticationLogic, AuthenticationLogic>();
@@ -91,6 +94,10 @@ namespace WorkforceManagement.WebUI
                 cfg.CreateMap<AuthDataDdd, AuthData>();
                 cfg.CreateMap<Skill, SkillDdd>();
                 cfg.CreateMap<SkillDdd, Skill>();
+                cfg.CreateMap<Skill, SkillViewModel>();
+                cfg.CreateMap<SkillViewModel, Skill>();
+                cfg.CreateMap<EmployeeViewModel, Employee>();
+                cfg.CreateMap<AuthDataViewModel, AuthData>();
                 cfg.CreateMap<Employee, UserDataViewModel>();
                 cfg.CreateMap<AuthData, UserDataViewModel>().ForMember(src => src.Email, dest => dest.MapFrom(x => x.Email));
             });

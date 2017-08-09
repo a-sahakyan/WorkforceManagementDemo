@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorkforceManagement.DAL\WorkforceManagement.DAL.csproj" />
+    <ProjectReference Include="..\WorkforceManagement.DDD\WorkforceManagement.DDD.csproj" />
     <ProjectReference Include="..\WorkforceManagement.Domain\WorkforceManagement.Domain.csproj" />
-    <ProjectReference Include="..\WorkforceManagement.DTO\WorkforceManagement.DDD.csproj" />
     <ProjectReference Include="..\WorkforceManagement.VM\WorkforceManagement.VM.csproj" />
   </ItemGroup>
 

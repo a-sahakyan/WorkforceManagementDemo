@@ -1,22 +1,20 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using WorkforceManagement.BLL.Logic;
+using WorkforceManagement.DDD.Models;
 using WorkforceManagement.Domain.Entities;
-using WorkforceManagement.DTO.Models;
+using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
     public class AccountController : Controller, IDisposable
     {
-        IMapLogic<Employee, EmployeeDdd> _employeeDtoMap;
         IAuthenticationLogic _authentication;
         IAdminLogic _admLogic;
 
         public AccountController(IAuthenticationLogic authentication, IMapLogic<Employee, EmployeeDdd> employeeDtoMap,
             IAdminLogic admLogic)
         {
-            _employeeDtoMap = employeeDtoMap;
             _authentication = authentication;
             _admLogic = admLogic;
         }
@@ -28,7 +26,7 @@ namespace WorkforceManagement.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registration(EmployeeDdd employee, AuthDataDdd authData)
+        public IActionResult Registration(EmployeeViewModel employee, AuthDataViewModel authData)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +49,7 @@ namespace WorkforceManagement.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(AuthData data)
+        public IActionResult Login(AuthDataViewModel data)
         {
             string role = _authentication.SignIn(data);
 

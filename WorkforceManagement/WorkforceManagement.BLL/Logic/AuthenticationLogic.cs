@@ -2,14 +2,15 @@
 using System.Linq;
 using WorkforceManagement.DAL.DataProvider;
 using WorkforceManagement.Domain.Entities;
-using WorkforceManagement.DTO.Models;
+using WorkforceManagement.DDD.Models;
+using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.BLL.Logic
 {
     public class AuthenticationLogic : IAuthenticationLogic
     {
-        private IMapLogic<Employee, EmployeeDdd> _mapperEmployee;
-        private IMapLogic<AuthData, AuthDataDdd> _mapperAuthData;
+        private IMapLogic<Employee, EmployeeViewModel> _mapperEmployee;
+        private IMapLogic<AuthData, AuthDataViewModel> _mapperAuthData;
         private IRepository<Employee> _employee;
         private IRepository<AuthData> _authData;
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -17,7 +18,8 @@ namespace WorkforceManagement.BLL.Logic
 
         public static bool IsAuthenticated { get; set; }
 
-        public AuthenticationLogic(IMapLogic<Employee, EmployeeDdd> mapperEmployee, IMapLogic<AuthData, AuthDataDdd> mapperAuthData,
+        public AuthenticationLogic(IMapLogic<Employee, EmployeeViewModel> mapperEmployee, 
+            IMapLogic<AuthData, AuthDataViewModel> mapperAuthData,
             IRepository<Employee> employee, IRepository<AuthData> authData,IHttpContextAccessor http)
         {
             _mapperEmployee = mapperEmployee;
@@ -32,7 +34,7 @@ namespace WorkforceManagement.BLL.Logic
             _session.SetString("IsAuth", isAuthenticated.ToString());
         }
 
-        public void Register(EmployeeDdd employee, AuthDataDdd authData)
+        public void Register(EmployeeViewModel employee, AuthDataViewModel authData)
         {
             var newEmployee = _mapperEmployee.Map(employee);
             _employee.Insert(newEmployee);
@@ -48,7 +50,7 @@ namespace WorkforceManagement.BLL.Logic
 
         public static int CurrentUserId { get; set; }
 
-        public string SignIn(AuthData authData)
+        public string SignIn(AuthDataViewModel authData)
         {
             var adminEmail = _authData.GetAll().Select(x => x.Email).First();
             var adminPass = _authData.GetAll().Select(x => x.Password).First();

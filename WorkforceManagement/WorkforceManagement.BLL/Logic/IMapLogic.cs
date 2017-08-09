@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WorkforceManagement.DAL.DataProvider;
 
 namespace WorkforceManagement.BLL.Logic
 {

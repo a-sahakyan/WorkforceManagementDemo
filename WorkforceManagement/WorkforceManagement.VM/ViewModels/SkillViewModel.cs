@@ -1,6 +1,6 @@
-﻿namespace WorkforceManagement.Domain.Entities
+﻿namespace WorkforceManagement.VM.ViewModels
 {
-    public class Skill
+    public class SkillViewModel
     {
         public int SkillId { get; set; }
 

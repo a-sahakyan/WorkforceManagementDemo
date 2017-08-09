@@ -54,7 +54,7 @@
   </ItemGroup>
 <ItemGroup>
   <ProjectReference Include="..\WorkforceManagement.BLL\WorkforceManagement.BLL.csproj" />
+  <ProjectReference Include="..\WorkforceManagement.DDD\WorkforceManagement.DDD.csproj" />
   <ProjectReference Include="..\WorkforceManagement.Domain\WorkforceManagement.Domain.csproj" />
-  <ProjectReference Include="..\WorkforceManagement.DTO\WorkforceManagement.DDD.csproj" />
 </ItemGroup>
 </Project>

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace WorkforceManagement.DTO.Models
+namespace WorkforceManagement.VM.ViewModels
 {
-    public class EmployeeDdd
+    public class EmployeeViewModel
     {
         public int EmployeeId { get; set; }
 

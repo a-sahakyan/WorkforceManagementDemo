@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkforceManagement.DTO.Models
+namespace WorkforceManagement.DDD.Models
 {
     public class SkillDdd
     {

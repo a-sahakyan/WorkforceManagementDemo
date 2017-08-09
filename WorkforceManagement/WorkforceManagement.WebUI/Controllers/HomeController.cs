@@ -1,26 +1,22 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.IO;
 using WorkforceManagement.BLL.Logic;
 using WorkforceManagement.DAL.DataProvider;
+using WorkforceManagement.DDD.Models;
 using WorkforceManagement.Domain.Entities;
-using WorkforceManagement.DTO.Models;
+using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private IMapLogic<Employee, EmployeeDdd> _mapperEmployee;
-        private IMapLogic<Skill, SkillDdd> _mapperSkill;
+        private IMapLogic<Skill, SkillViewModel> _mapperSkill;
         private IAuthenticationLogic _auth;
         private ISkillLogic _skill;
 
-        public HomeController(IMapLogic<Employee, EmployeeDdd> mapperEmployee, IAuthenticationLogic auth, ISkillLogic skill,
-            IMapLogic<Skill, SkillDdd> mapperSkill)
+        public HomeController(IAuthenticationLogic auth, ISkillLogic skill,
+            IMapLogic<Skill, SkillViewModel> mapperSkill)
         {
-            _mapperEmployee = mapperEmployee;
             _mapperSkill = mapperSkill;
             _auth = auth;
             _skill = skill;
@@ -29,8 +25,7 @@ namespace WorkforceManagement.WebUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var employeeDto = _mapperEmployee.MapAll();
-            var skillDto = _mapperSkill.MapAll();
+            var skillViewModel = _mapperSkill.MapAll();
             ViewBag.IsAuthenticated = AuthenticationLogic.IsAuthenticated;
             ViewBag.CurrentUser = AuthenticationLogic.CurrentUserId;
             _auth.SetAuthentication(AuthenticationLogic.IsAuthenticated);
@@ -41,11 +36,11 @@ namespace WorkforceManagement.WebUI.Controllers
             string json = JsonConvert.SerializeObject(data);
             DataAccess.WriteData("data", json);
 
-            return View(skillDto);
+            return View(skillViewModel);
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody]SkillDdd datas)
+        public IActionResult Index([FromBody]SkillViewModel datas)
         {
             _skill.SaveSkills(datas);
 

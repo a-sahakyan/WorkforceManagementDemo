@@ -1,13 +1,14 @@
-﻿using WorkforceManagement.Domain.Entities;
-using WorkforceManagement.DTO.Models;
+﻿using WorkforceManagement.DDD.Models;
+using WorkforceManagement.Domain.Entities;
+using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.BLL.Logic
 {
     public interface IAuthenticationLogic
     {
-        void Register(EmployeeDdd employee, AuthDataDdd authData);
+        void Register(EmployeeViewModel employee, AuthDataViewModel authData);
 
-        string SignIn(AuthData authData);
+        string SignIn(AuthDataViewModel authData);
 
         void SetAuthentication(bool isAuthenticated);
     }

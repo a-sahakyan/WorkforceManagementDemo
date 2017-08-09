@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorkforceManagement.DTO.Models
+namespace WorkforceManagement.VM.ViewModels
 {
-    public class AuthDataDdd
+    public class AuthDataViewModel
     {
         public int EmployeeId { get; set; }
 

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WorkforceManagement.DTO.Models;
+﻿using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.BLL.Logic
 {
     public interface ISkillLogic
     {
-        void SaveSkills(SkillDdd datas);
+        void SaveSkills(SkillViewModel datas);
     }
 }
