@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using WorkforceManagement.DAL.Concrete;
+using WorkforceManagement.Domain.Entities;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace WorkforceManagement.DAL.DataProvider
 {
@@ -17,7 +21,7 @@ namespace WorkforceManagement.DAL.DataProvider
 
         public IEnumerable<TModel> GetAll()
         {
-             return _context.Set<TModel>(); 
+            return _context.Set<TModel>();
         }
 
         public void Delete(TModel data)
@@ -31,9 +35,15 @@ namespace WorkforceManagement.DAL.DataProvider
             _context.SaveChanges();
         }
 
-        public void Update(TModel data)
+        public void Update(Skill updated, Skill original)
         {
-            throw new NotImplementedException();
+            Skill skillUpdate = _context.Skills.Where(w => w.SkillId == original.SkillId).FirstOrDefault();
+            if (skillUpdate != null)
+            {
+                skillUpdate.SkillName = updated.SkillName;
+                skillUpdate.SkillKnowledge = updated.SkillKnowledge;
+                _context.SaveChanges();
+            }
         }
     }
 }

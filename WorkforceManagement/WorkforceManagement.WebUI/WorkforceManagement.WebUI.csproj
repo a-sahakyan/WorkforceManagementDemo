@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
-  </PropertyGroup>
+ </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="wwwroot\lib\bootstrap-calendar\**" />
@@ -22,13 +22,6 @@
     <None Remove="wwwroot\lib\core-resizable\**" />
     <None Remove="wwwroot\lib\flatpickr\**" />
     <None Remove="wwwroot\lib\fullcalendar\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="wwwroot\js\calendar.js" />
-    <Content Include="wwwroot\js\data.json" />
-    <Content Include="wwwroot\js\progressbar.js" />
-    <Content Include="wwwroot\js\request.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.1" />

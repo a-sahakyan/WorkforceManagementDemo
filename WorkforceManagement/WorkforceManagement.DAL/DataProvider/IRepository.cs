@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using WorkforceManagement.Domain.Entities;
 
 namespace WorkforceManagement.DAL.DataProvider
 {
@@ -12,6 +14,6 @@ namespace WorkforceManagement.DAL.DataProvider
 
         void Delete(TModel data);
 
-        void Update(TModel data);
+        void Update(Skill updated,Skill original);
     }
 }

@@ -30,29 +30,26 @@ namespace WorkforceManagement.WebUI.Controllers
             ViewBag.CurrentUser = AuthenticationLogic.CurrentUserId;
             _auth.SetAuthentication(AuthenticationLogic.IsAuthenticated);
 
-            var content = DataAccess.LoadData("data");
-            var data = JsonConvert.DeserializeObject<SkillConfig>(content);
-            data.Count = "0";
-            string json = JsonConvert.SerializeObject(data);
-            DataAccess.WriteData("data", json);
-
             return View(skillViewModel);
         }
 
         [HttpPost]
         public IActionResult Index([FromBody]SkillViewModel datas)
         {
-            _skill.SaveSkills(datas);
+            if (datas.SkillName != "")
+            {
+                var newSkill = _skill.Check(datas);
+                if (newSkill)
+                {
+                    _skill.SaveSkills(datas);
+                }
+                else
+                {
+                    _skill.UpdateSkills(datas);
+                }
+            }
 
             return Json(datas);
-        }
-
-        public IActionResult JsonConfig([FromBody]SkillConfig data)
-        {
-            string json = JsonConvert.SerializeObject(data);
-            DataAccess.WriteData("data", json);
-
-            return Json(data);
         }
     }
 }
