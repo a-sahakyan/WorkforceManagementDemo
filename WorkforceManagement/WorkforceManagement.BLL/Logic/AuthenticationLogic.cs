@@ -2,7 +2,6 @@
 using System.Linq;
 using WorkforceManagement.DAL.DataProvider;
 using WorkforceManagement.Domain.Entities;
-using WorkforceManagement.DDD.Models;
 using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.BLL.Logic

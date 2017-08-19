@@ -1,6 +1,4 @@
-﻿using WorkforceManagement.DDD.Models;
-using WorkforceManagement.Domain.Entities;
-using WorkforceManagement.VM.ViewModels;
+﻿using WorkforceManagement.VM.ViewModels;
 
 namespace WorkforceManagement.BLL.Logic
 {

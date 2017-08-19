@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using WorkforceManagement.Domain.Entities;
 
 namespace WorkforceManagement.DAL.DataProvider

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WorkforceManagement.DDD.Models
+﻿namespace WorkforceManagement.DDD.Models
 {
     public class SkillDdd
     {

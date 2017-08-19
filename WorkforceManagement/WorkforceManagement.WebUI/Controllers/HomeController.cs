@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using WorkforceManagement.BLL.Logic;
-using WorkforceManagement.DAL.DataProvider;
-using WorkforceManagement.DDD.Models;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.VM.ViewModels;
 

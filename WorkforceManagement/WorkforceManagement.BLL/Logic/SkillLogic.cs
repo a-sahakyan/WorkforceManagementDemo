@@ -1,10 +1,8 @@
-﻿using WorkforceManagement.DAL.DataProvider;
-using WorkforceManagement.DDD.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using WorkforceManagement.DAL.DataProvider;
 using WorkforceManagement.Domain.Entities;
 using WorkforceManagement.VM.ViewModels;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace WorkforceManagement.BLL.Logic
 {
