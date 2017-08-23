@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using WorkforceManagement.Domain.Entities;
 
 namespace WorkforceManagement.DAL.DataProvider
@@ -7,7 +7,7 @@ namespace WorkforceManagement.DAL.DataProvider
     {
         TModel GetById { get; }
 
-        IEnumerable<TModel> GetAll();
+        IQueryable<TModel> GetAll();
 
         void Insert(TModel data);
 

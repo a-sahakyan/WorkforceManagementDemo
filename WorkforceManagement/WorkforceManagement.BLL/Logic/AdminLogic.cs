@@ -13,8 +13,8 @@ namespace WorkforceManagement.BLL.Logic
         IMapLogic<Employee, UserDataViewModel> _mapUser;
         IMapLogic<AuthData, UserDataViewModel> _mapData;
 
-        public AdminLogic(IMapLogic<Employee, UserDataViewModel> mapUser, IMapLogic<AuthData, UserDataViewModel> mapData, 
-            IRepository<Employee> employee,IRepository<AuthData> authData)
+        public AdminLogic(IMapLogic<Employee, UserDataViewModel> mapUser, IMapLogic<AuthData, UserDataViewModel> mapData,
+            IRepository<Employee> employee, IRepository<AuthData> authData)
         {
             _employee = employee;
             _authData = authData;
@@ -25,11 +25,13 @@ namespace WorkforceManagement.BLL.Logic
         public IEnumerable<UserDataViewModel> GetAllUsersData()
         {
             var userDatas = _mapUser.MapAll();
-            int count = 0;
-           
+            int emailCount = 0;
+            int passCount = 0;
+
             foreach (var item in userDatas)
             {
-                item.Email = _authData.GetAll().Select(x => x.Email).Skip(count).Take(++count).First();
+                item.Email = _authData.GetAll().Select(x => x.Email).Skip(emailCount).Take(++emailCount).First();
+                item.Password = _authData.GetAll().Select(x => x.Password).Skip(passCount).Take(++passCount).First();
             }
 
             return userDatas;

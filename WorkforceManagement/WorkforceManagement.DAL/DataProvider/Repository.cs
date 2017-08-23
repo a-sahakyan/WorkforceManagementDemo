@@ -17,7 +17,7 @@ namespace WorkforceManagement.DAL.DataProvider
 
         public TModel GetById => throw new NotImplementedException();
 
-        public IEnumerable<TModel> GetAll()
+        public IQueryable<TModel> GetAll()
         {
             return _context.Set<TModel>();
         }
